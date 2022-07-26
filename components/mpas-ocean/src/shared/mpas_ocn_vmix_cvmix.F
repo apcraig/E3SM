@@ -79,6 +79,8 @@ module ocn_vmix_cvmix
       cvmixShearMixingTypePP = 1,        & ! PP mixing scheme
       cvmixShearMixingTypeKPP = 2          ! KPP mixing scheme
 
+   character(len=256) :: tmpstr
+
 !***********************************************************************
 
 contains
@@ -169,6 +171,10 @@ contains
 
       real (kind=RKIND) :: langmuirEnhancementFactor, langmuirNumber
 
+      real (kind=RKIND) :: latCellDeg, latCellDegAbs
+      real (kind=RKIND),allocatable,save :: bdlatfn(:)
+      logical,save :: first_call = .true.
+
       !-----------------------------------------------------------------
       !
       ! call relevant routines for computing mixing-related fields
@@ -248,6 +254,36 @@ contains
 
       nCells = nCellsArray( 3 )
 
+      if (first_call) then
+         allocate(bdlatfn(nCells))
+         bdlatfn(:) = -999.0_RKIND
+         write(tmpstr,'(a,2g12.4)') 'tcx0 ',config_cvmix_background_viscosity,config_cvmix_background_diffusion
+         call mpas_log_write(trim(tmpstr),MPAS_LOG_OUT)
+         do iCell = 1, nCells
+            ! Lat function for background visc/diff
+            ! tcraig, is PI not defined to more than 3 digits in mpas-ocean???
+            latCellDeg = latCell(iCell) * 180.0_RKIND / 3.14_RKIND
+            latCellDegAbs = abs(latCellDeg)
+            if (latCellDegAbs < 5.0_RKIND) then
+               call mpas_log_write('tcxL0',MPAS_LOG_OUT)
+               bdlatfn(iCell) = 0.0_RKIND
+            elseif (latCellDegAbs >= 5.0_RKIND .and. latCellDegAbs <= 27._RKIND) then
+               call mpas_log_write('tcxL5',MPAS_LOG_OUT)
+               bdlatfn(iCell) = (1.0_RKIND-exp(-((latCellDegAbs-5._RKIND)/8._RKIND)**2))
+            elseif (latCellDegAbs > 27.0_RKIND .and. latCellDegAbs <= 30._RKIND) then
+               call mpas_log_write('tcxL27',MPAS_LOG_OUT)
+               bdlatfn(iCell) = 1.0_RKIND
+            elseif (latCellDegAbs > 30._RKIND) then
+               call mpas_log_write('tcxL30',MPAS_LOG_OUT)
+               bdlatfn(iCell) = 0.75_RKIND*(exp(-((latCellDegAbs-30._RKIND)**2)/36._RKIND)) + 0.25_RKIND
+            endif
+            write(tmpstr,'(a,i8,2g12.4)') 'tcx1 ',iCell,lonCell(iCell),latCell(iCell)
+            call mpas_log_write(trim(tmpstr),MPAS_LOG_OUT)
+            write(tmpstr,'(a,i8,2g12.4)') 'tcx2 ',iCell,latCellDeg,bdlatfn(iCell)
+            call mpas_log_write(trim(tmpstr),MPAS_LOG_OUT)
+         enddo
+      endif
+
       !
       ! start by adding the mininum background values to the viscocity/diffusivity arrays
       !
@@ -256,8 +292,8 @@ contains
          !$omp do schedule(runtime) private(k)
          do iCell = 1, nCells
             do k = 1, nVertLevelsP1
-               vertViscTopOfCell(k, iCell) = vertViscTopOfCell(k, iCell) + config_cvmix_background_viscosity
-               vertDiffTopOfCell(k, iCell) = vertDiffTopOfCell(k, iCell) + config_cvmix_background_diffusion
+               vertViscTopOfCell(k, iCell) = vertViscTopOfCell(k, iCell) + bdlatfn(iCell)*config_cvmix_background_viscosity
+               vertDiffTopOfCell(k, iCell) = vertDiffTopOfCell(k, iCell) + bdlatfn(iCell)*config_cvmix_background_diffusion
             end do
          end do
          !$omp end do
@@ -796,6 +832,8 @@ contains
 
       deallocate(OBLDepths)
       deallocate(interfaceForcings)
+
+      first_call = .false.
 
    !--------------------------------------------------------------------
 

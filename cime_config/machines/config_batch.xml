@@ -346,6 +346,11 @@
   </batch_system>
 
   <batch_system MACH="onyx" type="pbs" >
+    <directives queue="debug">
+      <directive>-A {{ PROJECT }}</directive>
+      <directive>-l application=Regional-Arctic-System-Model</directive>
+      <directive>-l select={{ num_nodes }}:ncpus={{ MAX_MPITASKS_PER_NODE }}:mpiprocs={{ tasks_per_node }}</directive>
+    </directives>
     <directives queue="standard">
       <directive>-A {{ PROJECT }}</directive>
       <directive>-l application=Regional-Arctic-System-Model</directive>

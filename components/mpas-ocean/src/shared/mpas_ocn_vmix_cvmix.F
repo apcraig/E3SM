@@ -80,6 +80,7 @@ module ocn_vmix_cvmix
       cvmixShearMixingTypeKPP = 2          ! KPP mixing scheme
 
    character(len=256) :: tmpstr
+   integer :: myunit
 
 !***********************************************************************
 
@@ -257,6 +258,7 @@ contains
       if (first_call) then
          allocate(bdlatfn(nCells))
          bdlatfn(:) = -999.0_RKIND
+         write(myunit,'(a,2g12.4)') 'tcx0 ',config_cvmix_background_viscosity,config_cvmix_background_diffusion
          write(tmpstr,'(a,2g12.4)') 'tcx0 ',config_cvmix_background_viscosity,config_cvmix_background_diffusion
          call mpas_log_write(trim(tmpstr),MPAS_LOG_OUT)
          do iCell = 1, nCells
@@ -277,8 +279,10 @@ contains
                call mpas_log_write('tcxL30',MPAS_LOG_OUT)
                bdlatfn(iCell) = 0.75_RKIND*(exp(-((latCellDegAbs-30._RKIND)**2)/36._RKIND)) + 0.25_RKIND
             endif
+            write(myunit,'(a,i8,2g12.4)') 'tcx1 ',iCell,lonCell(iCell),latCell(iCell)
             write(tmpstr,'(a,i8,2g12.4)') 'tcx1 ',iCell,lonCell(iCell),latCell(iCell)
             call mpas_log_write(trim(tmpstr),MPAS_LOG_OUT)
+            write(myunit,'(a,i8,2g12.4)') 'tcx2 ',iCell,latCellDeg,bdlatfn(iCell)
             write(tmpstr,'(a,i8,2g12.4)') 'tcx2 ',iCell,latCellDeg,bdlatfn(iCell)
             call mpas_log_write(trim(tmpstr),MPAS_LOG_OUT)
          enddo
@@ -883,6 +887,7 @@ contains
       backgroundDiff = config_cvmix_background_diffusion
       cvmixConvectionOn = config_use_cvmix_convection
       cvmixKPPOn = config_use_cvmix_kpp
+      myunit = 1000 + domain % dminfo % my_proc_id
 
       !
       ! only initialize if CVMix is turned on

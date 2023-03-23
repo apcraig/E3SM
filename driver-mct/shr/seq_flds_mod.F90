@@ -771,6 +771,14 @@ contains
        call metadata_set(attname, longname, stdname, units)
     end if
 
+    ! temperature at the surface (K)
+    call seq_flds_add(a2x_states,"Sa_ssto")
+    longname = 'Observed SST'
+    stdname  = 'Observed_SST'
+    units    = 'K'
+    attname  = 'Sa_ssto'
+    call metadata_set(attname, longname, stdname, units)
+
     ! convective precipitation rate
     ! large-scale (stable) snow rate (water equivalent)
     call seq_flds_add(a2x_fluxes,"Faxa_rainc")

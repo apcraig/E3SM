@@ -73,7 +73,7 @@ module datm_comp_mod
   data   dTarc      / 0.49_R8, 0.06_R8,-0.73_R8,  -0.89_R8,-0.77_R8,-1.02_R8, &
        -1.99_R8,-0.91_R8, 1.72_R8,   2.30_R8, 1.81_R8, 1.06_R8/
 
-  integer(IN) :: kz,ktopo,ku,kv,ktbot,kptem,kshum,kdens,kpbot,kpslv,klwdn
+  integer(IN) :: kz,ktopo,ku,kv,ktbot,kptem,kshum,kdens,kpbot,kpslv,klwdn,kssto
   integer(IN) :: krc,krl,ksc,ksl,kswndr,kswndf,kswvdr,kswvdf,kswnet
   integer(IN) :: kanidr,kanidf,kavsdr,kavsdf
   integer(IN) :: stbot,swind,sz,spbot,sshum,stdew,srh,slwdn,sswdn,sswdndf,sswdndr
@@ -100,11 +100,11 @@ module datm_comp_mod
   real(R8), pointer    :: winddFactor(:)
   real(R8), pointer    :: qsatFactor(:)
 
-  integer(IN),parameter :: ktrans  = 77
+  integer(IN),parameter :: ktrans  = 78
 
   character(16),parameter  :: avofld(1:ktrans) = &
-       (/"Sa_z            ","Sa_topo         ", &
-       "Sa_u            ","Sa_v            ","Sa_tbot         ", &
+     (/"Sa_z            ","Sa_topo         ", &
+       "Sa_u            ","Sa_v            ","Sa_tbot         ","Sa_ssto         ", &
        "Sa_ptem         ","Sa_shum         ","Sa_dens         ","Sa_pbot         ", &
        "Sa_pslv         ","Faxa_lwdn       ","Faxa_rainc      ","Faxa_rainl      ", &
        "Faxa_snowc      ","Faxa_snowl      ","Faxa_swndr      ","Faxa_swvdr      ", &
@@ -130,8 +130,8 @@ module datm_comp_mod
        /)
 
   character(16),parameter  :: avifld(1:ktrans) = &
-       (/"z               ","topo            ", &
-       "u               ","v               ","tbot            ", &
+     (/"z               ","topo            ", &
+       "u               ","v               ","tbot            ","ssto            ", &
        "ptem            ","shum            ","dens            ","pbot            ", &
        "pslv            ","lwdn            ","rainc           ","rainl           ", &
        "snowc           ","snowl           ","swndr           ","swvdr           ", &
@@ -164,7 +164,7 @@ module datm_comp_mod
   integer(IN),parameter :: ktranss = 33
 
   character(16),parameter  :: stofld(1:ktranss) = &
-       (/"strm_tbot       ","strm_wind       ","strm_z          ","strm_pbot       ", &
+     (/"strm_tbot       ","strm_wind       ","strm_z          ","strm_pbot       ", &
        "strm_shum       ","strm_tdew       ","strm_rh         ","strm_lwdn       ", &
        "strm_swdn       ","strm_swdndf     ","strm_swdndr     ","strm_precc      ", &
        "strm_precl      ","strm_precn      ","strm_co2prog    ","strm_co2diag    ", &
@@ -178,7 +178,7 @@ module datm_comp_mod
        /)
 
   character(16),parameter  :: stifld(1:ktranss) = &
-       (/"tbot            ","wind            ","z               ","pbot            ", &
+     (/"tbot            ","wind            ","z               ","pbot            ", &
        "shum            ","tdew            ","rh              ","lwdn            ", &
        "swdn            ","swdndf          ","swdndr          ","precc           ", &
        "precl           ","precn           ","co2prog         ","co2diag         ", &
@@ -364,6 +364,7 @@ CONTAINS
        kv    = mct_aVect_indexRA(a2x,'Sa_v')
        ktbot = mct_aVect_indexRA(a2x,'Sa_tbot')
        kptem = mct_aVect_indexRA(a2x,'Sa_ptem')
+       kssto = mct_aVect_indexRA(a2x,'Sa_ssto')
        kshum = mct_aVect_indexRA(a2x,'Sa_shum')
        kdens = mct_aVect_indexRA(a2x,'Sa_dens')
        kpbot = mct_aVect_indexRA(a2x,'Sa_pbot')

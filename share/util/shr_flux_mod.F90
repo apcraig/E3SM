@@ -150,7 +150,8 @@ SUBROUTINE shr_flux_atmOcn(nMax  ,zbot  ,ubot  ,vbot  ,thbot ,   &
            &               taux  ,tauy  ,tref  ,qref  ,   &
            &               ocn_surface_flux_scheme, &
            &               duu10n,  ustar_sv   ,re_sv ,ssq_sv,   &
-           &               missval, wsresp, tau_est, ugust)
+           &               missval, wsresp, tau_est, ugust, &
+           &               seq_flux_sstb, ssto)
 
 ! !USES:
 
@@ -204,6 +205,8 @@ SUBROUTINE shr_flux_atmOcn(nMax  ,zbot  ,ubot  ,vbot  ,thbot ,   &
    real(R8),intent(in) ,optional :: wsresp(nMax)   ! boundary layer wind response to stress (m/s/Pa)
    real(R8),intent(in) ,optional :: tau_est(nMax)  ! stress in equilibrium with boundary layer (Pa)
    real(R8),intent(in) ,optional :: ugust(nMax)    ! extra wind speed from gustiness (m/s)
+   real(R8),intent(in) ,optional :: seq_flux_sstb  ! observed SST anti-restoring term
+   real(R8),intent(in) ,optional :: ssto(nMax)     ! observed SST (K)
 
 ! !EOP
 
@@ -351,7 +354,8 @@ SUBROUTINE shr_flux_atmOcn(nMax  ,zbot  ,ubot  ,vbot  ,thbot ,   &
             endif
         endif
         ssq    = 0.98_R8 * qsat(ts(n)) / rbot(n)   ! sea surf hum (kg/kg)
-        delt   = thbot(n) - ts(n)                  ! pot temp diff (K)
+        delt   = thbot(n) - ts(n) + &              ! pot temp diff (K)
+                 seq_flux_sstb * (ts(n) - ssto(n)) ! increase delt as ts warms for G cases
         delq   = qbot(n) - ssq                     ! spec hum dif (kg/kg)
         alz    = log(zbot(n)/zref)
         cp     = loc_cpdair*(1.0_R8 + loc_cpvir*ssq)

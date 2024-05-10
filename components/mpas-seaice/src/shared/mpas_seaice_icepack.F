@@ -504,6 +504,7 @@ contains
          iCategory
 
     call icepack_init_snow()
+    call seaice_icepack_write_warnings(icepack_warnings_aborted())
 
     call MPAS_pool_get_config(domain % configs, "config_use_effective_snow_density", config_use_effective_snow_density)
     call MPAS_pool_get_config(domain % configs, "config_use_snow_grain_radius", config_use_snow_grain_radius)
@@ -12908,7 +12909,6 @@ contains
   subroutine init_column_tracer_object_for_biogeochemistry(domain, tracerObject)
 
     use icepack_intfc, only: icepack_init_zbgc
-    use icepack_intfc, only: icepack_init_zbgc_tracer_indices
     use icepack_intfc, only: icepack_init_parameters
     use icepack_intfc, only: icepack_query_parameters
 
@@ -13354,7 +13354,34 @@ contains
          tau_min_in=config_rapid_mobile_to_stationary_time, &
          tau_max_in=config_long_mobile_to_stationary_time)
 
-    call icepack_init_zbgc_tracer_indices(&
+      call icepack_init_tracer_sizes( &
+         nilyr_in=nIceLayers, &
+         nslyr_in=nSnowLayers, &
+         nblyr_in=nBioLayers, &
+         n_algae_in=nAlgae, &
+         n_zaero_in=nzAerosols, &
+         n_doc_in=nDOC, &
+         n_dic_in=nDIC, &
+         n_don_in=nDON, &
+         n_fed_in=nDissolvedIron, &
+         n_fep_in=nParticulateIron)
+
+      call icepack_init_tracer_flags( &
+         tr_brine_in=config_use_brine, &
+         tr_bgc_Nit_in=config_use_nitrate, &
+         tr_bgc_Am_in=config_use_ammonium, &
+         tr_bgc_Sil_in=config_use_silicate, &
+         tr_bgc_DMS_in=config_use_DMS, &
+         tr_bgc_PON_in=config_use_nonreactive, &
+         tr_bgc_N_in=use_nitrogen, &
+         tr_bgc_C_in=config_use_carbon, &
+         tr_bgc_chl_in=config_use_chlorophyll, &
+         tr_bgc_DON_in=config_use_DON, &
+         tr_bgc_Fe_in=config_use_iron,&
+         tr_bgc_hum_in=config_use_humics, &
+         tr_zaero_in=config_use_zaerosols)
+
+    call init_zbgc_tracer_indices(&
          nilyr_in=nIceLayers, &
          nslyr_in=nSnowLayers, &
          nblyr_in=nBioLayers, &
@@ -13431,7 +13458,58 @@ contains
          bio_index_o_out=tracerObject % index_LayerIndexToDataArray, &
          bio_index_out=tracerObject % index_LayerIndexToBioIndex)
 
-    call icepack_init_zbgc()
+      call icepack_init_tracer_sizes( &
+         ntrcr_in=tracerObject % nTracers, &
+         ntrcr_o_in=tracerObject % nTracersNotBio, &
+         nbtrcr_in=tracerObject % nBioTracers, &
+         nbtrcr_sw_in=tracerObject % nBioTracersShortwave)
+
+      call icepack_init_zbgc( &
+           zbgc_init_frac_in=zbgc_init_frac, tau_ret_in=tau_ret, tau_rel_in=tau_rel, &
+           zbgc_frac_init_in=zbgc_frac_init, bgc_tracer_type_in=bgc_tracer_type)
+
+      call icepack_init_tracer_indices( &
+         nt_bgc_Nit_in=tracerObject % index_nitrateConc, &
+         nt_bgc_Am_in=tracerObject % index_ammoniumConc, &
+         nt_bgc_Sil_in=tracerObject % index_silicateConc, &
+         nt_bgc_DMS_in=tracerObject % index_DMSConc, &
+         nt_bgc_PON_in=tracerObject % index_nonreactiveConc, &
+         nt_bgc_N_in=tracerObject % index_algaeConc, &
+         nt_bgc_C_in=tracerObject % index_algalCarbon, &
+         nt_bgc_chl_in=tracerObject % index_algalChlorophyll, &
+         nt_bgc_DOC_in=tracerObject % index_DOCConc, &
+         nt_bgc_DON_in=tracerObject % index_DONConc, &
+         nt_bgc_DIC_in=tracerObject % index_DICConc, &
+         nt_zaero_in=tracerObject % index_verticalAerosolsConc, &
+         nt_bgc_DMSPp_in=tracerObject % index_DMSPpConc, &
+         nt_bgc_DMSPd_in=tracerObject % index_DMSPdConc, &
+         nt_bgc_Fed_in=tracerObject % index_dissolvedIronConc, &
+         nt_bgc_Fep_in=tracerObject % index_particulateIronConc, &
+         nt_zbgc_frac_in=tracerObject % index_mobileFraction, &
+         nt_bgc_hum_in=tracerObject % index_humicsConc, &
+         nt_fbri_in=tracerObject % index_brineFraction,&
+         nlt_zaero_sw_in=tracerObject % index_verticalAerosolsConcShortwave, &
+         nlt_chl_sw_in=tracerObject % index_chlorophyllShortwave, &
+         nlt_bgc_N_in=tracerObject % index_algaeConcLayer, &
+         nlt_bgc_Nit_in=tracerObject % index_nitrateConcLayer, &
+         nlt_bgc_Am_in=tracerObject % index_ammoniumConcLayer, &
+         nlt_bgc_Sil_in=tracerObject % index_silicateConcLayer, &
+         nlt_bgc_DMS_in=tracerObject % index_DMSConcLayer, &
+         nlt_bgc_DMSPp_in=tracerObject % index_DMSPpConcLayer, &
+         nlt_bgc_DMSPd_in=tracerObject % index_DMSPdConcLayer, &
+         nlt_bgc_C_in=tracerObject % index_algalCarbonLayer, &
+         nlt_bgc_chl_in=tracerObject % index_algalChlorophyllLayer, &
+         nlt_bgc_DIC_in=tracerObject % index_DICConcLayer, &
+         nlt_bgc_DOC_in=tracerObject % index_DOCConcLayer, &
+         nlt_bgc_PON_in=tracerObject % index_nonreactiveConcLayer, &
+         nlt_bgc_DON_in=tracerObject % index_DONConcLayer, &
+         nlt_bgc_Fed_in=tracerObject % index_dissolvedIronConcLayer, &
+         nlt_bgc_Fep_in=tracerObject % index_particulateIronConcLayer, &
+         nlt_zaero_in=tracerObject % index_verticalAerosolsConcLayer, &
+         nlt_bgc_hum_in=tracerObject % index_humicsConcLayer, &
+         bio_index_o_in=tracerObject % index_LayerIndexToDataArray, &
+         bio_index_in=tracerObject % index_LayerIndexToBioIndex)
+      call seaice_icepack_write_warnings(icepack_warnings_aborted())
 
     ! check calculated tracer array size
     if (nTracers_temp /= tracerObject % nTracers) then
@@ -13632,6 +13710,7 @@ contains
             nblyr=nBioLayers, &
             nilyr=nIceLayers, &
             phi_snow=config_snow_porosity_at_ice_surface)
+       call seaice_icepack_write_warnings(icepack_warnings_aborted())
 
        do iCell = 1, nCellsSolve
           if (.not. config_do_restart_hbrine) then
@@ -15645,6 +15724,792 @@ contains
     deallocate(verticalGridSpace)
 
   end subroutine seaice_total_carbon_content_category
+
+!-----------------------------------------------------------------------
+!
+!  Initialize zbgc tracer indices if not done in the driver
+
+      subroutine init_zbgc_tracer_indices(&
+                 nilyr_in, nslyr_in, nblyr_in, &
+                 n_algae_in, n_zaero_in, n_doc_in, n_dic_in, n_don_in, n_fed_in, n_fep_in, &
+                 trcr_base, trcr_depend, n_trcr_strata, nt_strata, nbtrcr_sw, tr_brine_in,&
+                 nt_fbri, ntrcr, ntrcr_o, nbtrcr, nt_bgc_Nit, nt_bgc_Am, &
+                 nt_bgc_Sil, nt_bgc_DMS, nt_bgc_PON, nt_bgc_N, &
+                 nt_bgc_C, nt_bgc_chl, nt_bgc_DOC, nt_bgc_DON, nt_bgc_DIC, &
+                 nt_zaero, nt_bgc_DMSPp, nt_bgc_DMSPd, nt_bgc_Fed, nt_bgc_Fep, &
+                 nt_zbgc_frac, tr_bgc_Nit_in, tr_bgc_Am_in, tr_bgc_Sil_in, tr_bgc_DMS_in, &
+                 tr_bgc_PON_in, tr_bgc_N_in, tr_bgc_C_in, tr_bgc_chl_in, &
+                 tr_bgc_DON_in, tr_bgc_Fe_in, tr_zaero_in, nlt_zaero_sw, nlt_chl_sw, &
+                 nlt_bgc_N, nlt_bgc_Nit, nlt_bgc_Am, nlt_bgc_Sil, &
+                 nlt_bgc_DMS, nlt_bgc_DMSPp, nlt_bgc_DMSPd, &
+                 nlt_bgc_C, nlt_bgc_chl, nlt_bgc_DIC, nlt_bgc_DOC, &
+                 nlt_bgc_PON, nlt_bgc_DON, nlt_bgc_Fed, nlt_bgc_Fep, &
+                 nlt_zaero, &
+                 nt_bgc_hum, nlt_bgc_hum, tr_bgc_hum_in, &
+                 skl_bgc_in, z_tracers_in, dEdd_algae_in, solve_zbgc_in, &
+                 bio_index_o, bio_index, printdiags)
+
+      integer (kind=int_kind), optional, intent(in) ::&
+         nilyr_in     , & ! number of ice layers
+         nslyr_in     , & ! number of snow layers
+         nblyr_in     , & ! number of biology layers
+         n_zaero_in   , & ! number of z aerosols in use
+         n_algae_in   , & ! number of algae in use
+         n_doc_in     , & ! number of DOC pools in use
+         n_dic_in     , & ! number of DIC pools in use
+         n_don_in     , & ! number of DON pools in use
+         n_fed_in     , & ! number of Fe  pools in use dissolved Fe
+         n_fep_in         ! number of Fe  pools in use particulate Fe
+
+      integer (kind=int_kind), optional, intent(inout) :: &
+         ntrcr,       & ! number of tracers
+         ntrcr_o,     & ! number of non-bio tracers in use
+         nbtrcr,      & ! number of bgc tracers in use
+         nbtrcr_sw      ! size of shorwave tracer vector
+
+      integer (kind=int_kind), dimension (:), intent(inout) :: &
+         trcr_depend   ! = 0 for ice area tracers
+                       ! = 1 for ice volume tracers
+                       ! = 2 for snow volume tracers
+
+      integer (kind=int_kind), dimension (:), intent(inout) :: &
+         n_trcr_strata ! number of underlying tracer layers
+
+      integer (kind=int_kind), dimension (:,:), intent(inout) :: &
+         nt_strata     ! indices of underlying tracer layers
+
+      real (kind=dbl_kind), dimension (:,:), intent(inout) :: &
+         trcr_base     ! = 0 or 1 depending on tracer dependency
+                       ! argument 2:  (1) aice, (2) vice, (3) vsno
+
+      logical (kind=log_kind), optional, intent(in) :: &
+         tr_brine_in,       & ! if .true., brine height differs from ice thickness
+         tr_zaero_in,       & ! if .true., black carbon is tracers  (n_zaero)
+         tr_bgc_Nit_in,     & ! if .true. Nitrate tracer in ice
+         tr_bgc_N_in,       & ! if .true., algal nitrogen tracers  (n_algae)
+         tr_bgc_DON_in,     & ! if .true., DON pools are tracers  (n_don)
+         tr_bgc_C_in,       & ! if .true., algal carbon tracers + DOC and DIC
+         tr_bgc_chl_in,     & ! if .true., algal chlorophyll tracers
+         tr_bgc_Am_in,      & ! if .true., ammonia/um as nutrient tracer
+         tr_bgc_Sil_in,     & ! if .true., silicon as nutrient tracer
+         tr_bgc_DMS_in,     & ! if .true., DMS as  tracer
+         tr_bgc_Fe_in,      & ! if .true., Fe as  tracer
+         tr_bgc_PON_in,     & ! if .true., PON as tracer
+         tr_bgc_hum_in,     & ! if .true., humic material as tracer
+         z_tracers_in,      & ! if .true., bgc or aerosol tracers are vertically resolved
+         solve_zbgc_in,     & ! if .true., solve vertical biochemistry portion of code
+         dEdd_algae_in,     & ! if .true., algal absorption of Shortwave is computed in the
+         skl_bgc_in           ! if true, solve skeletal biochemistry
+
+       integer (kind=int_kind), optional, intent(out) :: &
+         nt_fbri,      & ! volume fraction of ice with dynamic salt (hinS/vicen*aicen)
+         nt_bgc_Nit,   & ! nutrients
+         nt_bgc_Am,    & !
+         nt_bgc_Sil,   & !
+         nt_bgc_DMSPp, & ! trace gases (skeletal layer)
+         nt_bgc_DMSPd, & !
+         nt_bgc_DMS,   & !
+         nt_bgc_PON,   & ! zooplankton and detritus
+         nt_bgc_hum,   & ! humic material
+                         ! bio layer indicess
+         nlt_bgc_Nit,  & ! nutrients
+         nlt_bgc_Am,   & !
+         nlt_bgc_Sil,  & !
+         nlt_bgc_DMSPp,& ! trace gases (skeletal layer)
+         nlt_bgc_DMSPd,& !
+         nlt_bgc_DMS,  & !
+         nlt_bgc_PON,  & ! zooplankton and detritus
+         nlt_bgc_hum,  & ! humic material
+         nlt_chl_sw,   & ! points to total chla in trcrn_sw
+         nt_zbgc_frac    ! fraction of tracer in the mobile phase
+
+      integer (kind=int_kind), dimension(:), optional, intent(out) :: &
+         nt_bgc_N , & ! diatoms, phaeocystis, pico/small
+         nt_bgc_C , & ! diatoms, phaeocystis, pico/small
+         nt_bgc_chl,& ! diatoms, phaeocystis, pico/small
+         nlt_bgc_N ,& ! diatoms, phaeocystis, pico/small
+         nlt_bgc_C ,& ! diatoms, phaeocystis, pico/small
+         nlt_bgc_chl   ! diatoms, phaeocystis, pico/small
+
+      integer (kind=int_kind), dimension(:), optional, intent(out) :: &
+         nt_bgc_DOC,   & !  dissolved organic carbon
+         nlt_bgc_DOC     !  dissolved organic carbon
+
+      integer (kind=int_kind), dimension(:), optional, intent(out) :: &
+         nt_bgc_DON,   & !  dissolved organic nitrogen
+         nlt_bgc_DON     !  dissolved organic nitrogen
+
+      integer (kind=int_kind), dimension(:), optional, intent(out) :: &
+         nt_bgc_DIC,    & !  dissolved inorganic carbon
+         nlt_bgc_DIC      !  dissolved inorganic carbon
+
+      integer (kind=int_kind), dimension(:), optional, intent(out) :: &
+         nt_bgc_Fed,     & !  dissolved iron
+         nt_bgc_Fep,     & !  particulate iron
+         nlt_bgc_Fed,    & !  dissolved iron
+         nlt_bgc_Fep       !  particulate iron
+
+      integer (kind=int_kind), dimension(:), optional, intent(out) :: &
+         nt_zaero,    & !  black carbon and other aerosols
+         nlt_zaero,   & !  black carbon and other aerosols
+         nlt_zaero_sw
+
+      integer (kind=int_kind), dimension(:), optional, intent(out) :: &
+         bio_index_o , & ! nlt  to appropriate value in ocean data array
+         bio_index       ! nlt to nt
+
+      logical (kind=log_kind), optional, intent(in) :: &
+         printdiags    ! print diagnostics to warning package
+
+!autodocument_end
+
+      ! local variables
+
+      real (kind=dbl_kind), dimension (:), allocatable :: &
+        algaltype, &
+        doctype, &
+        dictype, &
+        dontype, &
+        fedtype, &
+        feptype, &
+        zaerotype
+
+      integer (kind=int_kind) :: &
+        k, mm    , & ! loop index
+        ntd      , & ! for tracer dependency calculation
+        nk       , & !
+        nt_depend
+
+      ! these were in icepack (via use), make local variables
+
+      integer (kind=int_kind) :: &
+        nilyr, nslyr, nblyr, n_algae, n_zaero, n_doc, n_dic, n_don, n_fed, n_fep
+
+      logical (kind=log_kind) :: &
+        tr_brine, tr_zaero, tr_bgc_Nit, tr_bgc_N, tr_bgc_DON, tr_bgc_C, tr_bgc_chl, &
+        tr_bgc_Am, tr_bgc_Sil, tr_bgc_DMS, tr_bgc_Fe, tr_bgc_hum, tr_bgc_PON, &
+        z_tracer, solve_zbgc, dEdd_algae, slk_bgc
+
+      character(len=*),parameter :: subname='(init_zbgc_tracer_indices)'
+
+      !------------
+
+      ! BGC Tracer Dimensions
+      if (present(nilyr_in)    ) nilyr     = nilyr_in
+      if (present(nslyr_in)    ) nslyr     = nslyr_in
+      if (present(nblyr_in)    ) nblyr     = nblyr_in
+      if (present(n_algae_in)  ) n_algae   = n_algae_in
+      if (present(n_zaero_in)  ) n_zaero   =  n_zaero_in
+      if (present(n_doc_in)    ) n_doc     = n_doc_in
+      if (present(n_dic_in)    ) n_dic     = n_dic_in
+      if (present(n_don_in)    ) n_don     = n_don_in
+      if (present(n_fed_in)    ) n_fed     = n_fed_in
+      if (present(n_fep_in)    ) n_fep     = n_fep_in
+
+      ! BGC Tracer Flags
+      if (present(tr_brine_in)  ) tr_brine   = tr_brine_in
+      if (present(tr_zaero_in)  ) tr_zaero   = tr_zaero_in
+      if (present(tr_bgc_Nit_in)) tr_bgc_Nit = tr_bgc_Nit_in
+      if (present(tr_bgc_N_in)  ) tr_bgc_N   = tr_bgc_N_in
+      if (present(tr_bgc_DON_in)) tr_bgc_DON = tr_bgc_DON_in
+      if (present(tr_bgc_C_in)  ) tr_bgc_C   = tr_bgc_C_in
+      if (present(tr_bgc_chl_in)) tr_bgc_chl = tr_bgc_chl_in
+      if (present(tr_bgc_Am_in) ) tr_bgc_Am  = tr_bgc_Am_in
+      if (present(tr_bgc_Sil_in)) tr_bgc_Sil = tr_bgc_Sil_in
+      if (present(tr_bgc_DMS_in)) tr_bgc_DMS = tr_bgc_DMS_in
+      if (present(tr_bgc_Fe_in )) tr_bgc_Fe  = tr_bgc_Fe_in
+      if (present(tr_bgc_hum_in)) tr_bgc_hum = tr_bgc_hum_in
+      if (present(tr_bgc_PON_in)) tr_bgc_PON = tr_bgc_PON_in
+
+      !BGC Config Flags
+      if (present(z_tracers_in)         ) z_tracers        = z_tracers_in
+      if (present(solve_zbgc_in)        ) solve_zbgc       = solve_zbgc_in
+      if (present(dEdd_algae_in)        ) dEdd_algae       = dEdd_algae_in
+      if (present(skl_bgc_in)           ) skl_bgc          = skl_bgc_in
+
+      !  Total tracer counts.  Initialize first
+!      if (present(ntrcr_out)                ) ntrcr            = ntrcr_out
+
+      ntrcr_o = ntrcr
+      nt_fbri = 0
+      if (tr_brine) then
+          nt_fbri = ntrcr + 1   ! ice volume fraction with salt
+          ntrcr = ntrcr + 1
+          trcr_depend(nt_fbri)   = 1   ! volume-weighted
+          trcr_base  (nt_fbri,1) = c0  ! volume-weighted
+          trcr_base  (nt_fbri,2) = c1  ! volume-weighted
+          trcr_base  (nt_fbri,3) = c0  ! volume-weighted
+          n_trcr_strata(nt_fbri) = 0
+          nt_strata  (nt_fbri,1) = 0
+          nt_strata  (nt_fbri,2) = 0
+      endif
+
+      ntd = 0                    ! if nt_fbri /= 0 then use fbri dependency
+      if (nt_fbri == 0) ntd = -1 ! otherwise make tracers depend on ice volume
+
+      !-----------------------------------------------------------------
+      ! biogeochemistry
+      !-----------------------------------------------------------------
+
+      nbtrcr = 0
+      nbtrcr_sw = 0
+
+      ! vectors of size max_algae
+      nlt_bgc_N(:) = 0
+      nlt_bgc_C(:) = 0
+      nlt_bgc_chl(:) = 0
+      nt_bgc_N(:) = 0
+      nt_bgc_C(:) = 0
+      nt_bgc_chl(:) = 0
+
+      ! vectors of size max_dic
+      nlt_bgc_DIC(:) = 0
+      nt_bgc_DIC(:) = 0
+
+      ! vectors of size max_doc
+      nlt_bgc_DOC(:) = 0
+      nt_bgc_DOC(:) = 0
+
+      ! vectors of size max_don
+      nlt_bgc_DON(:) = 0
+      nt_bgc_DON(:) = 0
+
+      ! vectors of size max_fe
+      nlt_bgc_Fed(:) = 0
+      nlt_bgc_Fep(:) = 0
+      nt_bgc_Fed(:) = 0
+      nt_bgc_Fep(:) = 0
+
+      ! vectors of size max_aero
+      nlt_zaero(:) = 0
+      nlt_zaero_sw(:) = 0
+      nt_zaero(:) = 0
+
+      nlt_bgc_Nit    = 0
+      nlt_bgc_Am     = 0
+      nlt_bgc_Sil    = 0
+      nlt_bgc_DMSPp  = 0
+      nlt_bgc_DMSPd  = 0
+      nlt_bgc_DMS    = 0
+      nlt_bgc_PON    = 0
+      nlt_bgc_hum    = 0
+      nlt_chl_sw     = 0
+      bio_index(:)   = 0
+      bio_index_o(:) = 0
+
+      nt_bgc_Nit    = 0
+      nt_bgc_Am     = 0
+      nt_bgc_Sil    = 0
+      nt_bgc_DMSPp  = 0
+      nt_bgc_DMSPd  = 0
+      nt_bgc_DMS    = 0
+      nt_bgc_PON    = 0
+      nt_bgc_hum    = 0
+
+      allocate(algaltype(max_algae))
+      allocate(doctype(max_doc))
+      allocate(dictype(max_dic))
+      allocate(dontype(max_don))
+      allocate(fedtype(max_fe))
+      allocate(feptype(max_fe))
+      allocate(zaerotype(max_aero))
+
+      algaltype(1) = algaltype_diatoms
+      algaltype(2) = algaltype_sp
+      algaltype(3) = algaltype_phaeo
+
+      doctype(1) = doctype_s
+      doctype(2) = doctype_l
+
+      dictype(1) = dictype_1
+
+      dontype(1) = dontype_protein
+
+      fedtype(1) = fedtype_1
+      feptype(1) = feptype_1
+
+      zaerotype(1) = zaerotype_bc1
+      zaerotype(2) = zaerotype_bc2
+      zaerotype(3) = zaerotype_dust1
+      zaerotype(4) = zaerotype_dust2
+      zaerotype(5) = zaerotype_dust3
+      zaerotype(6) = zaerotype_dust4
+
+      if (skl_bgc) then
+
+         nk = 1
+         nt_depend = 0
+
+         if (dEdd_algae) then
+           nlt_chl_sw = 1
+           nbtrcr_sw = nilyr+nslyr+2  ! only the bottom layer
+                                      ! will be nonzero
+          endif
+      elseif (z_tracers) then ! defined on nblyr+1 in ice
+                              ! and 2 snow layers (snow surface + interior)
+         nk = nblyr + 1
+         nt_depend = 2 + nt_fbri + ntd
+
+         if (tr_bgc_N) then
+            if (dEdd_algae) then
+               nlt_chl_sw = 1
+               nbtrcr_sw =  nilyr+nslyr+2
+            endif
+         endif ! tr_bgc_N
+
+      endif ! skl_bgc or z_tracers
+
+
+      if (skl_bgc .or. z_tracers) then
+
+      !-----------------------------------------------------------------
+      ! assign tracer indices and dependencies
+      ! bgc_tracer_type: < 0  purely mobile , >= 0 stationary
+      !------------------------------------------------------------------
+
+      if (tr_bgc_N) then
+         do mm = 1, n_algae
+            call init_bgc_trcr(&
+                                      nk,             nt_fbri,       &
+                                      nt_bgc_N(mm),    nlt_bgc_N(mm), &
+                                      algaltype(mm),   nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_N(mm)) = mm
+         enddo   ! mm
+      endif ! tr_bgc_N
+
+      if (tr_bgc_Nit) then
+         call init_bgc_trcr(&
+                                      nk,             nt_fbri,       &
+                                      nt_bgc_Nit,      nlt_bgc_Nit,   &
+                                      nitratetype,     nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_Nit) = max_algae + 1
+      endif ! tr_bgc_Nit
+
+      if (tr_bgc_C) then
+       !
+       ! Algal C is not yet distinct from algal N
+       ! * Reqires exudation and/or changing C:N ratios
+       ! for implementation
+       !
+       !  do mm = 1,n_algae
+       !     call init_bgc_trcr(nk,             nt_fbri,       &
+       !                               nt_bgc_C(mm),    nlt_bgc_C(mm), &
+       !                               algaltype(mm),   nt_depend,     &
+       !                               ntrcr,           nbtrcr,        &
+       !                               bgc_tracer_type, trcr_depend,   &
+       !                               trcr_base,       n_trcr_strata, &
+       !                               nt_strata,       bio_index)
+       !     bio_index_o(nlt_bgc_C(mm)) = max_algae + 1 + mm
+       !  enddo   ! mm
+
+         do mm = 1, n_doc
+            call init_bgc_trcr(&
+                                      nk,               nt_fbri,       &
+                                      nt_bgc_DOC(mm),    nlt_bgc_DOC(mm), &
+                                      doctype(mm),       nt_depend,     &
+                                      ntrcr,             nbtrcr,        &
+                                      bgc_tracer_type,   trcr_depend,   &
+                                      trcr_base,         n_trcr_strata, &
+                                      nt_strata,         bio_index)
+            bio_index_o(nlt_bgc_DOC(mm)) = max_algae + 1 + mm
+         enddo   ! mm
+         do mm = 1, n_dic
+            call init_bgc_trcr(&
+                                      nk,               nt_fbri,       &
+                                      nt_bgc_DIC(mm),    nlt_bgc_DIC(mm), &
+                                      dictype(mm),       nt_depend,     &
+                                      ntrcr,             nbtrcr,        &
+                                      bgc_tracer_type,   trcr_depend,   &
+                                      trcr_base,         n_trcr_strata, &
+                                      nt_strata,         bio_index)
+            bio_index_o(nlt_bgc_DIC(mm)) = max_algae + max_doc + 1 + mm
+         enddo   ! mm
+      endif      ! tr_bgc_C
+
+      if (tr_bgc_chl) then
+         do mm = 1, n_algae
+            call init_bgc_trcr(&
+                                      nk,               nt_fbri,       &
+                                      nt_bgc_chl(mm),    nlt_bgc_chl(mm), &
+                                      algaltype(mm),     nt_depend,     &
+                                      ntrcr,             nbtrcr,        &
+                                      bgc_tracer_type,   trcr_depend,   &
+                                      trcr_base,         n_trcr_strata, &
+                                      nt_strata,         bio_index)
+            bio_index_o(nlt_bgc_chl(mm)) = max_algae + 1 + max_doc + max_dic + mm
+         enddo   ! mm
+      endif      ! tr_bgc_chl
+
+      if (tr_bgc_Am) then
+         call init_bgc_trcr(&
+                                      nk,             nt_fbri,       &
+                                      nt_bgc_Am,       nlt_bgc_Am,    &
+                                      ammoniumtype,    nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_Am) = 2*max_algae + max_doc + max_dic + 2
+      endif
+      if (tr_bgc_Sil) then
+         call init_bgc_trcr(&
+                                      nk,              nt_fbri,       &
+                                      nt_bgc_Sil,      nlt_bgc_Sil,   &
+                                      silicatetype,    nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_Sil) = 2*max_algae + max_doc + max_dic + 3
+      endif
+      if (tr_bgc_DMS) then   ! all together
+         call init_bgc_trcr(&
+                                      nk,              nt_fbri,       &
+                                      nt_bgc_DMSPp,    nlt_bgc_DMSPp, &
+                                      dmspptype,       nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_DMSPp) = 2*max_algae + max_doc + max_dic + 4
+
+            call init_bgc_trcr(&
+                                      nk,              nt_fbri,       &
+                                      nt_bgc_DMSPd,    nlt_bgc_DMSPd, &
+                                      dmspdtype,       nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_DMSPd) = 2*max_algae + max_doc + max_dic + 5
+
+            call init_bgc_trcr(&
+                                      nk,              nt_fbri,       &
+                                      nt_bgc_DMS,      nlt_bgc_DMS,   &
+                                      dmspdtype,       nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_DMS) = 2*max_algae + max_doc + max_dic + 6
+      endif
+      if (tr_bgc_PON) then
+         call init_bgc_trcr(&
+                                      nk,              nt_fbri,       &
+                                      nt_bgc_PON,      nlt_bgc_PON, &
+                                      nitratetype,     nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_PON) =  2*max_algae + max_doc + max_dic + 7
+      endif
+      if (tr_bgc_DON) then
+         do mm = 1, n_don
+            call init_bgc_trcr(&
+                                      nk,                nt_fbri,       &
+                                      nt_bgc_DON(mm),    nlt_bgc_DON(mm), &
+                                      dontype(mm),       nt_depend,     &
+                                      ntrcr,             nbtrcr,        &
+                                      bgc_tracer_type,   trcr_depend,   &
+                                      trcr_base,         n_trcr_strata, &
+                                      nt_strata,         bio_index)
+            bio_index_o(nlt_bgc_DON(mm)) = 2*max_algae + max_doc + max_dic + 7 + mm
+         enddo   ! mm
+      endif      ! tr_bgc_DON
+      if (tr_bgc_Fe) then
+         do mm = 1, n_fed
+            call init_bgc_trcr(&
+                                      nk,                nt_fbri,       &
+                                      nt_bgc_Fed(mm),    nlt_bgc_Fed(mm), &
+                                      fedtype(mm),       nt_depend,     &
+                                      ntrcr,             nbtrcr,        &
+                                      bgc_tracer_type,   trcr_depend,   &
+                                      trcr_base,         n_trcr_strata, &
+                                      nt_strata,         bio_index)
+            bio_index_o(nlt_bgc_Fed(mm)) = 2*max_algae + max_doc + max_dic &
+                                         + max_don + 7 + mm
+         enddo   ! mm
+         do mm = 1, n_fep
+            call init_bgc_trcr(&
+                                      nk,                nt_fbri,       &
+                                      nt_bgc_Fep(mm),    nlt_bgc_Fep(mm), &
+                                      feptype(mm),       nt_depend,     &
+                                      ntrcr,             nbtrcr,        &
+                                      bgc_tracer_type,   trcr_depend,   &
+                                      trcr_base,         n_trcr_strata, &
+                                      nt_strata,         bio_index)
+            bio_index_o(nlt_bgc_Fep(mm)) = 2*max_algae + max_doc + max_dic &
+                                         + max_don + max_fe + 7 + mm
+         enddo   ! mm
+      endif      ! tr_bgc_Fe
+
+      if (tr_bgc_hum) then
+         call init_bgc_trcr(&
+                                      nk,              nt_fbri,       &
+                                      nt_bgc_hum,      nlt_bgc_hum,   &
+                                      humtype,         nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+            bio_index_o(nlt_bgc_hum) =   2*max_algae + max_doc + 8 + max_dic &
+                                         + max_don + 2*max_fe + max_aero
+      endif
+      endif  ! skl_bgc or z_tracers
+
+      if (z_tracers) then ! defined on nblyr+1 in ice
+                              ! and 2 snow layers (snow surface + interior)
+
+         nk = nblyr + 1
+         nt_depend = 2 + nt_fbri + ntd
+
+         ! z layer aerosols
+         if (tr_zaero) then
+            do mm = 1, n_zaero
+               if (dEdd_algae) then
+                  nlt_zaero_sw(mm) = nbtrcr_sw + 1
+                  nbtrcr_sw = nbtrcr_sw + nilyr + nslyr+2
+               endif
+               call init_bgc_trcr(&
+                                         nk,             nt_fbri,       &
+                                         nt_zaero(mm),    nlt_zaero(mm), &
+                                         zaerotype(mm),   nt_depend,     &
+                                         ntrcr,           nbtrcr,        &
+                                         bgc_tracer_type, trcr_depend,   &
+                                         trcr_base,       n_trcr_strata, &
+                                         nt_strata,       bio_index)
+               bio_index_o(nlt_zaero(mm)) = 2*max_algae + max_doc + max_dic &
+                                          + max_don + 2*max_fe + 7 + mm
+            enddo   ! mm
+         endif      ! tr_zaero
+
+         nt_zbgc_frac = 0
+         if (nbtrcr > 0) then
+            nt_zbgc_frac = ntrcr + 1
+            ntrcr = ntrcr + nbtrcr
+            do k = 1,nbtrcr
+               zbgc_frac_init(k) = c1
+               trcr_depend(nt_zbgc_frac+k-1) =  2+nt_fbri
+               trcr_base(nt_zbgc_frac+ k - 1,1)  = c0
+               trcr_base(nt_zbgc_frac+ k - 1,2)  = c1
+               trcr_base(nt_zbgc_frac+ k - 1,3)  = c0
+               n_trcr_strata(nt_zbgc_frac+ k - 1)= 1
+               nt_strata(nt_zbgc_frac+ k - 1,1)  = nt_fbri
+               nt_strata(nt_zbgc_frac+ k - 1,2)  = 0
+               tau_ret(k) = c1
+               tau_rel(k) = c1
+               if (bgc_tracer_type(k) >=  c0 .and. bgc_tracer_type(k) < p5) then
+                  tau_ret(k) = tau_min
+                  tau_rel(k) = tau_max
+                  zbgc_frac_init(k) = c1
+               elseif (bgc_tracer_type(k) >= p5 .and. bgc_tracer_type(k) < c1) then
+                  tau_ret(k) = tau_min
+                  tau_rel(k) = tau_min
+                  zbgc_frac_init(k) = c1
+               elseif (bgc_tracer_type(k) >= c1 .and. bgc_tracer_type(k) < c2) then
+                  tau_ret(k) = tau_max
+                  tau_rel(k) = tau_min
+                  zbgc_frac_init(k) = c1
+               elseif (bgc_tracer_type(k) >= c2 ) then
+                  tau_ret(k) = tau_max
+                  tau_rel(k) = tau_max
+                  zbgc_frac_init(k) = c1
+               endif
+            enddo
+         endif
+
+      endif ! z_tracers
+
+      do k = 1, nbtrcr
+         zbgc_init_frac(k) = frazil_scav
+         if (bgc_tracer_type(k) < c0)  zbgc_init_frac(k) = initbio_frac
+      enddo
+
+      !-----------------------------------------------------------------
+      ! final consistency checks
+      !-----------------------------------------------------------------
+
+      if (nbtrcr > max_nbtrcr) then
+         write (warnstr,'(a,2i6)') subname//'ERROR:  nbtrcr > max_nbtrcr:',nbtrcr, max_nbtrcr
+         call mpas_log_write(warnstr, MPAS_LOG_CRIT)
+      endif
+      if (.NOT. dEdd_algae) nbtrcr_sw = 1
+
+      ! BGC Indices
+!      if (present(bio_index_out)    ) bio_index_out    = bio_index
+!      if (present(bio_index_o_out)  ) bio_index_o_out  = bio_index_o
+!      if (present(nt_fbri_out)      ) nt_fbri_out      = nt_fbri
+!      if (present(nt_bgc_Nit_out)   ) nt_bgc_Nit_out   = nt_bgc_Nit
+!      if (present(nlt_bgc_Nit_out)  ) nlt_bgc_Nit_out  = nlt_bgc_Nit
+!      if (present(nt_bgc_Am_out)    ) nt_bgc_Am_out    = nt_bgc_Am
+!      if (present(nlt_bgc_Am_out)   ) nlt_bgc_Am_out   = nlt_bgc_Am
+!      if (present(nt_bgc_Sil_out)   ) nt_bgc_Sil_out   = nt_bgc_Sil
+!      if (present(nlt_bgc_Sil_out)  ) nlt_bgc_Sil_out  = nlt_bgc_Sil
+!      if (present(nt_bgc_DMSPp_out) ) nt_bgc_DMSPp_out = nt_bgc_DMSPp
+!      if (present(nlt_bgc_DMSPp_out)) nlt_bgc_DMSPp_out= nlt_bgc_DMSPp
+!      if (present(nt_bgc_DMSPd_out) ) nt_bgc_DMSPd_out = nt_bgc_DMSPd
+!      if (present(nlt_bgc_DMSPd_out)) nlt_bgc_DMSPd_out= nlt_bgc_DMSPd
+!      if (present(nt_bgc_DMS_out)   ) nt_bgc_DMS_out   = nt_bgc_DMS
+!      if (present(nlt_bgc_DMS_out)  ) nlt_bgc_DMS_out  = nlt_bgc_DMS
+!      if (present(nt_bgc_hum_out)   ) nt_bgc_hum_out   = nt_bgc_hum
+!      if (present(nlt_bgc_hum_out)  ) nlt_bgc_hum_out  = nlt_bgc_hum
+!      if (present(nt_bgc_PON_out)   ) nt_bgc_PON_out   = nt_bgc_PON
+!      if (present(nlt_bgc_PON_out)  ) nlt_bgc_PON_out  = nlt_bgc_PON
+!      if (present(nt_bgc_N_out)     ) nt_bgc_N_out    = nt_bgc_N
+!      if (present(nlt_bgc_N_out)    ) nlt_bgc_N_out   = nlt_bgc_N
+!      if (present(nt_bgc_C_out)     ) nt_bgc_C_out    = nt_bgc_C
+!      if (present(nlt_bgc_C_out)    ) nlt_bgc_C_out   = nlt_bgc_C
+!      if (present(nt_bgc_chl_out)   ) nt_bgc_chl_out  = nt_bgc_chl
+!      if (present(nlt_bgc_chl_out)  ) nlt_bgc_chl_out = nlt_bgc_chl
+!      if (present(nt_bgc_DOC_out)   ) nt_bgc_DOC_out  = nt_bgc_DOC
+!      if (present(nlt_bgc_DOC_out)  ) nlt_bgc_DOC_out = nlt_bgc_DOC
+!      if (present(nt_bgc_DON_out)   ) nt_bgc_DON_out  = nt_bgc_DON
+!      if (present(nlt_bgc_DON_out)  ) nlt_bgc_DON_out = nlt_bgc_DON
+!      if (present(nt_bgc_DIC_out)   ) nt_bgc_DIC_out  = nt_bgc_DIC
+!      if (present(nlt_bgc_DIC_out)  ) nlt_bgc_DIC_out = nlt_bgc_DIC
+!      if (present(nt_bgc_Fed_out)   ) nt_bgc_Fed_out  = nt_bgc_Fed
+!      if (present(nlt_bgc_Fed_out)  ) nlt_bgc_Fed_out = nlt_bgc_Fed
+!      if (present(nt_bgc_Fep_out)   ) nt_bgc_Fep_out  = nt_bgc_Fep
+!      if (present(nlt_bgc_Fep_out)  ) nlt_bgc_Fep_out = nlt_bgc_Fep
+!      if (present(nt_zaero_out)     ) nt_zaero_out    = nt_zaero
+!      if (present(nlt_zaero_out)    ) nlt_zaero_out   = nlt_zaero
+!      if (present(nlt_zaero_sw_out) ) nlt_zaero_sw_out = nlt_zaero_sw
+!      if (present(nlt_chl_sw_out)   ) nlt_chl_sw_out   = nlt_chl_sw
+!      if (present(nt_zbgc_frac_out) ) nt_zbgc_frac_out = nt_zbgc_frac
+
+!      if (present(ntrcr_out)    ) ntrcr_out     = ntrcr
+!      if (present(ntrcr_o_out)  ) ntrcr_o_out   = ntrcr_o
+!      if (present(nbtrcr_out)   ) nbtrcr_out    = nbtrcr
+!      if (present(nbtrcr_sw_out)) nbtrcr_sw_out = nbtrcr_sw
+
+      deallocate(algaltype)
+      deallocate(doctype)
+      deallocate(dictype)
+      deallocate(dontype)
+      deallocate(fedtype)
+      deallocate(feptype)
+      deallocate(zaerotype)
+
+ 1000    format (a,2x,f9.2)  ! float
+ 1005    format (a,2x,f9.6)  ! float
+ 1010    format (a,2x,l6)    ! logical
+ 1020    format (a,2x,i6)    ! integer
+ 1030    format (a,   a8)    ! character
+
+      end subroutine init_zbgc_tracer_indices
+
+!=======================================================================
+
+      subroutine init_bgc_trcr(&
+                                      nk,              nt_fbri,       &
+                                      nt_bgc,          nlt_bgc,       &
+                                      bgctype,         nt_depend,     &
+                                      ntrcr,           nbtrcr,        &
+                                      bgc_tracer_type, trcr_depend,   &
+                                      trcr_base,       n_trcr_strata, &
+                                      nt_strata,       bio_index)
+
+
+      integer (kind=int_kind), intent(in) :: &
+         nk           , & ! counter
+         nt_depend    , & ! tracer dependency index
+         nt_fbri
+
+      integer (kind=int_kind), intent(inout) :: &
+         ntrcr        , & ! number of tracers
+         nbtrcr       , & ! number of bio tracers
+         nt_bgc       , & ! tracer index
+         nlt_bgc          ! bio tracer index
+
+      integer (kind=int_kind), dimension(:), intent(inout) :: &
+         trcr_depend  , & ! tracer dependencies
+         n_trcr_strata, & ! number of underlying tracer layers
+         bio_index        !
+
+      integer (kind=int_kind), dimension(:,:), intent(inout) :: &
+         nt_strata        ! indices of underlying tracer layers
+
+      real (kind=dbl_kind), dimension(:,:), intent(inout) :: &
+         trcr_base        ! = 0 or 1 depending on tracer dependency
+                          ! argument 2:  (1) aice, (2) vice, (3) vsno
+
+      real (kind=dbl_kind), intent(in) :: &
+         bgctype          ! bio tracer transport type (mobile vs stationary)
+
+      real (kind=dbl_kind), dimension(:), intent(inout) :: &
+         bgc_tracer_type  ! bio tracer transport type array
+
+      ! local variables
+
+      integer (kind=int_kind) :: &
+         k         , & ! loop index
+         n_strata  , & ! temporary values
+         nt_strata1, & !
+         nt_strata2
+
+      real (kind=dbl_kind) :: &
+         trcr_base1, & ! temporary values
+         trcr_base2, &
+         trcr_base3
+
+      character(len=*),parameter :: subname='(init_bgc_trcr)'
+
+         nt_bgc = ntrcr + 1
+         nbtrcr = nbtrcr + 1
+         nlt_bgc = nbtrcr
+         bgc_tracer_type(nbtrcr) = bgctype
+
+         if (nk > 1) then
+            ! include vertical bgc in snow
+            do k = nk, nk+1
+               ntrcr = ntrcr + 1
+               trcr_depend  (nt_bgc + k  ) = 2 ! snow volume
+               trcr_base    (nt_bgc + k,1) = c0
+               trcr_base    (nt_bgc + k,2) = c0
+               trcr_base    (nt_bgc + k,3) = c1
+               n_trcr_strata(nt_bgc + k  ) = 0
+               nt_strata    (nt_bgc + k,1) = 0
+               nt_strata    (nt_bgc + k,2) = 0
+            enddo
+
+            trcr_base1 = c0
+            trcr_base2 = c1
+            trcr_base3 = c0
+            n_strata = 1
+            nt_strata1 = nt_fbri
+            nt_strata2 = 0
+         else  ! nk = 1
+            trcr_base1 = c1
+            trcr_base2 = c0
+            trcr_base3 = c0
+            n_strata = 0
+            nt_strata1 = 0
+            nt_strata2 = 0
+         endif ! nk
+
+         do k = 1, nk     !in ice
+            ntrcr = ntrcr + 1
+            trcr_depend  (nt_bgc + k - 1  ) = nt_depend
+            trcr_base    (nt_bgc + k - 1,1) = trcr_base1
+            trcr_base    (nt_bgc + k - 1,2) = trcr_base2
+            trcr_base    (nt_bgc + k - 1,3) = trcr_base3
+            n_trcr_strata(nt_bgc + k - 1  ) = n_strata
+            nt_strata    (nt_bgc + k - 1,1) = nt_strata1
+            nt_strata    (nt_bgc + k - 1,2) = nt_strata2
+         enddo
+
+         bio_index (nlt_bgc) = nt_bgc
+
+       end subroutine init_bgc_trcr
 
 !-----------------------------------------------------------------------
 

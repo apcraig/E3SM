@@ -207,6 +207,24 @@ def buildnml(case, caseroot, compname):
             grid_date = '220802'
             grid_prefix = 'mpassi.ARRM10to60E2r1.rstFrom1monthG-chrys'
 
+    elif ice_grid == 'ARRMwISC3to18E3r1':
+        decomp_date = '20240619'
+        decomp_prefix = 'partitions/mpas-seaice.graph.info.'
+        grid_date = '20240806'
+        grid_prefix = 'mpassi.ARRMwISC3to18E3r1'
+        if ice_ic_mode == 'spunup':
+            grid_date = '240701'
+            grid_prefix = 'mpassi.ARRMwISC3to18E3r1.rstFrom1monthG-chrys'
+
+    elif ice_grid == 'ARRMwISC2p4to18E3r1':
+        decomp_date = '20240808'
+        decomp_prefix = 'partitions/mpas-seaice.graph.info.'
+        grid_date = '20240805'
+        grid_prefix = 'mpassi.ARRMwISC2p4to18E3r1'
+        if ice_ic_mode == 'spunup':
+            grid_date = '240701'
+            grid_prefix = 'mpassi.ARRMwISC2p4to18E3r1.rstFrom1monthG-chrys'
+
     elif ice_grid == 'EC30to60E2r2':
         decomp_date = '200908'
         decomp_prefix = 'mpas-seaice.graph.info.'

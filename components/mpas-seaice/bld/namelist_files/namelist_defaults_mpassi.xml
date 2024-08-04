@@ -19,6 +19,8 @@
 <config_dt ice_grid="oARRM60to10">900.0</config_dt>
 <config_dt ice_grid="oARRM60to6">900.0</config_dt>
 <config_dt ice_grid="ARRM10to60E2r1">900.0</config_dt>
+<config_dt ice_grid="ARRMwISC3to18E3r1">10.0</config_dt>
+<config_dt ice_grid="ARRMwISC2p4to18E3r1">10.0</config_dt>
 <config_dt ice_grid="EC30to60E2r2">1800.0</config_dt>
 <config_dt ice_grid="WC14to60E2r3">1800.0</config_dt>
 <config_dt ice_grid="WCAtl12to45E2r4">1800.0</config_dt>
@@ -74,6 +76,8 @@
 <config_initial_latitude_north ice_grid="SOwISC12to60E2r4">85.0</config_initial_latitude_north>
 <config_initial_latitude_north ice_grid="ECwISC30to60E2r1">75.0</config_initial_latitude_north>
 <config_initial_latitude_north ice_grid="ARRM10to60E2r1">75.0</config_initial_latitude_north>
+<config_initial_latitude_north ice_grid="ARRMwISC3to18E3r1">75.0</config_initial_latitude_north>
+<config_initial_latitude_north ice_grid="ARRMwISC2p4to18E3r1">75.0</config_initial_latitude_north>
 <config_initial_latitude_north ice_grid="oRRS30to10v3wLI">85.0</config_initial_latitude_north>
 <config_initial_latitude_north ice_grid="oRRS18to6v3">85.0</config_initial_latitude_north>
 <config_initial_latitude_south>-60.0</config_initial_latitude_south>
@@ -82,6 +86,8 @@
 <config_initial_latitude_south ice_grid="SOwISC12to60E2r4">-85.0</config_initial_latitude_south>
 <config_initial_latitude_south ice_grid="ECwISC30to60E2r1">-75.0</config_initial_latitude_south>
 <config_initial_latitude_south ice_grid="ARRM10to60E2r1">-85.0</config_initial_latitude_south>
+<config_initial_latitude_south ice_grid="ARRMwISC3to18E3r1">-85.0</config_initial_latitude_south>
+<config_initial_latitude_south ice_grid="ARRMwISC2p4to18E3r1">-85.0</config_initial_latitude_south>
 <config_initial_latitude_south ice_grid="oRRS30to10v3wLI">-85.0</config_initial_latitude_south>
 <config_initial_latitude_south ice_grid="oRRS18to6v3">-85.0</config_initial_latitude_south>
 <config_initial_velocity_type>'uniform'</config_initial_velocity_type>
@@ -133,6 +139,8 @@
 <config_dynamics_subcycle_number ice_grid="oARRM60to10">1</config_dynamics_subcycle_number>
 <config_dynamics_subcycle_number ice_grid="oARRM60to6">2</config_dynamics_subcycle_number>
 <config_dynamics_subcycle_number ice_grid="ARRM10to60E2r1">1</config_dynamics_subcycle_number>
+<config_dynamics_subcycle_number ice_grid="ARRMwISC3to18E3r1">1</config_dynamics_subcycle_number>
+<config_dynamics_subcycle_number ice_grid="ARRMwISC2p4to18E3r1">1</config_dynamics_subcycle_number>
 <config_dynamics_subcycle_number ice_grid="EC30to60E2r2">1</config_dynamics_subcycle_number>
 <config_dynamics_subcycle_number ice_grid="WC14to60E2r3">1</config_dynamics_subcycle_number>
 <config_dynamics_subcycle_number ice_grid="WCAtl12to45E2r4">1</config_dynamics_subcycle_number>

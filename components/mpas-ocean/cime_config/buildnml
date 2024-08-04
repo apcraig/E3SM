@@ -219,6 +219,28 @@ def buildnml(case, caseroot, compname):
             ic_date = '220802'
             ic_prefix = 'mpaso.ARRM10to60E2r1.rstFrom1monthG-chrys'
 
+    elif ocn_grid == 'ARRMwISC3to18E3r1':
+        decomp_date = '20240619'
+        decomp_prefix = 'partitions/mpas-o.graph.info.'
+        restoring_file = 'sss.PHC3.0_monthlyClimatology.ARRMwISC3to18E3r1.240710.nc'
+        analysis_mask_file = 'ARRMwISC3to18E3r1_mocBasinsAndTransects240710.nc'
+        ic_date = '20240805'
+        ic_prefix = 'mpaso.ARRMwISC3to18E3r1'
+        if ocn_ic_mode == 'spunup':
+            ic_date = '20240710'
+            ic_prefix = 'mpaso.ARRMwISC3to18E3r1.rstFrom1monthG-pm'
+
+    elif ocn_grid == 'ARRMwISC2p4to18E3r1':
+        decomp_date = '20240805'
+        decomp_prefix = 'partitions/mpas-o.graph.info.'
+        restoring_file = 'sss.PHC3.0_monthlyClimatology.ARRMwISC2p4to18E3r1.240710.nc'
+        analysis_mask_file = 'ARRMwISC2p4to18E3r1_mocBasinsAndTransects240710.nc'
+        ic_date = '20240805'
+        ic_prefix = 'mpaso.ARRMwISC2p4to18E3r1'
+        if ocn_ic_mode == 'spunup':
+            ic_date = '20240710'
+            ic_prefix = 'mpaso.ARRMwISC2p4to18E3r1.rstFrom1monthG-pm'
+
     elif ocn_grid == 'EC30to60E2r2':
         decomp_date = '200904'
         decomp_prefix = 'mpas-o.graph.info.'

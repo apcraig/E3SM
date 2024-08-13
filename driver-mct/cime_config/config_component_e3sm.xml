@@ -372,7 +372,7 @@
       <value compset="_DATM.*_SLND.*MPAS" grid="oi%oRRS15to5">96</value>
       <value compset="_DATM.*_SLND.*MPAS" grid="oi%oARRM60to10">96</value>
       <value compset="_DATM.*_SLND.*MPAS" grid="oi%oARRM60to6">96</value>
-      <value compset="_DATM.*_SLND.*MPAS" grid="oi%ARRMwISC3to18E3r1">864</value>
+      <value compset="_DATM.*_SLND.*MPAS" grid="oi%ARRMwISC3to18E3r1">8640</value>
       <value compset="_DATM.*_SLND.*MPAS" grid="oi%ARRMwISC2p4to18E3r1">8640</value>
       <value compset="_EAM.*_ELM.*MPASO">48</value>
       <value compset="_EAM.*_ELM.*MPASO" grid="a%ne11np4">12</value>

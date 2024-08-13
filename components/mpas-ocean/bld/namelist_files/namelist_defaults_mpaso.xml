@@ -42,8 +42,8 @@
 <config_dt ocn_grid="oARRM60to10">'00:10:00'</config_dt>
 <config_dt ocn_grid="oARRM60to6">'00:05:00'</config_dt>
 <config_dt ocn_grid="ARRM10to60E2r1">'00:10:00'</config_dt>
-<config_dt ocn_grid="ARRMwISC3to18E3r1">'00:00:10'</config_dt>
-<config_dt ocn_grid="ARRMwISC2p4to18E3r1">'00:00:10'</config_dt>
+<config_dt ocn_grid="ARRMwISC3to18E3r1">'00:02:00'</config_dt>
+<config_dt ocn_grid="ARRMwISC2p4to18E3r1">'00:01:00'</config_dt>
 <config_dt ocn_grid="EC30to60E2r2">'00:30:00'</config_dt>
 <config_dt ocn_grid="WC14to60E2r3">'00:10:00'</config_dt>
 <config_dt ocn_grid="WCAtl12to45E2r4">'00:10:00'</config_dt>
@@ -452,8 +452,8 @@
 <config_btr_dt ocn_grid="oARRM60to10">'0000_00:00:24'</config_btr_dt>
 <config_btr_dt ocn_grid="oARRM60to6">'0000_00:00:10'</config_btr_dt>
 <config_btr_dt ocn_grid="ARRM10to60E2r1">'0000_00:00:24'</config_btr_dt>
-<config_btr_dt ocn_grid="ARRMwISC3to18E3r1">'0000_00:00:01'</config_btr_dt>
-<config_btr_dt ocn_grid="ARRMwISC2p4to18E3r1">'0000_00:00:01'</config_btr_dt>
+<config_btr_dt ocn_grid="ARRMwISC3to18E3r1">'0000_00:00:08'</config_btr_dt>
+<config_btr_dt ocn_grid="ARRMwISC2p4to18E3r1">'0000_00:00:04'</config_btr_dt>
 <config_btr_dt ocn_grid="EC30to60E2r2">'0000_00:01:00'</config_btr_dt>
 <config_btr_dt ocn_grid="WC14to60E2r3">'0000_00:00:15'</config_btr_dt>
 <config_btr_dt ocn_grid="WCAtl12to45E2r4">'0000_00:00:15'</config_btr_dt>

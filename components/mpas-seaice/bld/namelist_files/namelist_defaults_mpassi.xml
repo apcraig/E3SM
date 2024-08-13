@@ -19,8 +19,8 @@
 <config_dt ice_grid="oARRM60to10">900.0</config_dt>
 <config_dt ice_grid="oARRM60to6">900.0</config_dt>
 <config_dt ice_grid="ARRM10to60E2r1">900.0</config_dt>
-<config_dt ice_grid="ARRMwISC3to18E3r1">10.0</config_dt>
-<config_dt ice_grid="ARRMwISC2p4to18E3r1">10.0</config_dt>
+<config_dt ice_grid="ARRMwISC3to18E3r1">180.0</config_dt>
+<config_dt ice_grid="ARRMwISC2p4to18E3r1">120.0</config_dt>
 <config_dt ice_grid="EC30to60E2r2">1800.0</config_dt>
 <config_dt ice_grid="WC14to60E2r3">1800.0</config_dt>
 <config_dt ice_grid="WCAtl12to45E2r4">1800.0</config_dt>

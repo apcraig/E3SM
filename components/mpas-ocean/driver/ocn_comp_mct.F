@@ -58,6 +58,7 @@ module ocn_comp_mct
    use ocn_tracer_ecosys
    use ocn_tracer_CFC
    use ocn_tracer_surface_restoring
+   use ocn_tracer_interior_restoring
    use ocn_gm
    use ocn_config
    use ocn_submesoscale_eddies
@@ -102,6 +103,8 @@ module ocn_comp_mct
    type (domain_type), pointer:: domain
    integer :: itimestep, &  ! time step number for MPAS
               ocn_cpl_dt    ! length of coupling interval in seconds - set by coupler/ESMF
+
+   logical :: config_use_activetracers_interior_monthly_restoring = .true.
 
 !=======================================================================
 
@@ -722,6 +725,14 @@ contains
         call mpas_timer_stop('io_monthly_surface_salinity')
     endif
 
+!    call mpas_log_write(' tcx call getIRD')
+!    write(*,*) 'ocn_comp_mct.F tcxi ',config_use_activetracers_interior_restoring,config_use_activetracers_interior_monthly_restoring
+    if (config_use_activetracers_interior_restoring .and. config_use_activetracers_interior_monthly_restoring) then
+        call mpas_timer_start('io_monthly_interior_restoring',.false.)
+        call ocn_get_interiorRestoringData(domain_ptr % streamManager, domain, domain % clock, .true.)
+        call mpas_timer_stop('io_monthly_interior_restoring')
+    endif
+
     ! Setup clock for initial runs
     if ( runtype == 'initial' ) then
        ! Advance clock one coupling interval to be in sync with the coupler clock.
@@ -900,6 +911,8 @@ contains
       real (kind=RKIND), pointer :: config_ssh_grad_relax_timescale
       real (kind=RKIND) :: timeFilterFactor
 
+      logical :: salinityAlarm
+
       iam = domain % dminfo % my_proc_id
 
       debugOn = .false.
@@ -1024,13 +1037,24 @@ contains
          call mpas_pool_get_config(domain % configs, 'config_use_surface_salinity_monthly_restoring',  &
                                                       config_use_surface_salinity_monthly_restoring)
          if (config_use_activeTracers_surface_restoring .and.  config_use_surface_salinity_monthly_restoring) then
+             salinityAlarm = .false.
              if ( mpas_is_alarm_ringing(domain % clock, 'salinityDataReadAlarm', ierr=ierr) ) then
+                 salinityAlarm = .true.
                  call mpas_reset_clock_alarm(domain % clock, 'salinityDataReadAlarm', ierr=ierr)
                  call mpas_timer_start('io_monthly_surface_salinity',.false.)
                  call ocn_get_surfaceSalinityData(domain % streamManager, domain, domain_ptr % clock, .false.)
                  call mpas_timer_stop('io_monthly_surface_salinity')
              endif
          endif
+
+!         call mpas_log_write(' tcx call getIRD')
+!         write(*,*) 'ocn_comp_mct.F tcx1 ',salinityAlarm,config_use_activetracers_interior_restoring,config_use_activetracers_interior_monthly_restoring
+         if ( salinityAlarm .and. config_use_activetracers_interior_restoring .and. config_use_activetracers_interior_monthly_restoring) then
+           call mpas_timer_start('io_monthly_interior_restoring',.false.)
+           call ocn_get_interiorRestoringData(domain % streamManager, domain, domain % clock, .false.)
+           call mpas_timer_stop('io_monthly_interior_restoring')
+         endif
+
          if (iam==0.and.debugOn) then
             call mpas_log_write('   Finished reading forcing streams')
          endif
@@ -1989,6 +2013,8 @@ contains
            icebergHeatFlux(i) = x2o_o % rAttr(index_x2o_Fioi_bergh, n)
         end if
         if ( snowFluxField % isActive ) then
+! precip factor, 0.985 from Mat for G cases to reduce SSH increase
+!           snowFlux(i) = x2o_o % rAttr(index_x2o_Faxa_snow, n) * 0.985_RKIND
            snowFlux(i) = x2o_o % rAttr(index_x2o_Faxa_snow, n)
         end if
         if ( seaIceFreshWaterFluxField % isActive ) then
@@ -2028,6 +2054,8 @@ contains
         end if
 
         if ( rainFluxField % isActive ) then
+! precip factor, 0.985 from Mat for G cases to reduce SSH increase
+!           rainFlux(i) = x2o_o % rAttr(index_x2o_Faxa_rain, n) * 0.985_RKIND
            rainFlux(i) = x2o_o % rAttr(index_x2o_Faxa_rain, n)
         end if
         if ( atmosphericPressureField % isActive ) then

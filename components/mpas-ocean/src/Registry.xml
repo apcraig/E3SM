@@ -1749,6 +1749,7 @@
 			<var name="landIcePressure"/>
 			<var name="landIceFraction"/>
 			<var name="landIceDraft"/>
+			<var_struct name="tracersInteriorRestoringFields"/>
 		</stream>
 		<stream name="block_debug_output"
 				type="output"
@@ -1875,6 +1876,7 @@
             <var name="gotmDissTopOfCell"/>
             <var name="gotmLengthTopOfCell"/>
             <var name="ssh_sal"/>
+                        <var_struct name="tracersInteriorRestoringFields"/>
 		</stream>
 
 		<stream name="output"

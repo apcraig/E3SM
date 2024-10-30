@@ -75,6 +75,7 @@ module ocn_forward_mode
    use ocn_tracer_ideal_age
    use ocn_tracer_CFC
    use ocn_tracer_surface_restoring
+   use ocn_tracer_interior_restoring
    use ocn_gm
    use ocn_submesoscale_eddies
    use ocn_stokes_drift 
@@ -609,6 +610,8 @@ module ocn_forward_mode
 
       type (MPAS_timeInterval_type) :: timeStep
 
+      logical :: config_use_activetracers_interior_monthly_restoring = .true.
+
       ierr = 0
 
       ! Eventually, dt should be domain specific
@@ -653,6 +656,12 @@ module ocn_forward_mode
         call mpas_timer_start('io_monthly_surface_salinity',.false.)
         call ocn_get_surfaceSalinityData(domain % streamManager, domain, domain % clock, .true.)
         call mpas_timer_stop('io_monthly_surface_salinity')
+      endif
+
+      if ( config_use_activetracers_interior_restoring .and. config_use_activetracers_interior_monthly_restoring) then
+        call mpas_timer_start('io_monthly_interior_restoring',.false.)
+        call ocn_get_interiorRestoringData(domain % streamManager, domain, domain % clock, .true.)
+        call mpas_timer_stop('io_monthly_interior_restoring')
       endif
 
       ! initialize time-varying forcing
@@ -818,6 +827,12 @@ module ocn_forward_mode
               call ocn_get_surfaceSalinityData(domain % streamManager, domain, domain % clock, .false.)
               call mpas_timer_stop('io_monthly_surface_salinity')
            endif
+         endif
+
+         if ( config_use_activetracers_interior_restoring .and. config_use_activetracers_interior_monthly_restoring) then
+             call mpas_timer_start('io_monthly_interior_restoring',.false.)
+             call ocn_get_interiorRestoringData(domain % streamManager, domain, domain % clock, .false.)
+             call mpas_timer_stop('io_monthly_interior_restoring')
          endif
 
          ! read in next time level data required for time-varying forcing

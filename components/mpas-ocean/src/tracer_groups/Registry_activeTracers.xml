@@ -193,3 +193,12 @@
 			 description="monthly surface salinity climatology interpolated to current timestep"
 		/>
 	</var_struct>
+
+        <var_struct name="tracersInteriorMonthlyRestoring" time_levs="1">
+                <var name="interiorTemperatureMonthlyClimatologyValue" type="real" dimensions="nVertLevels nCells Time" array_group="activeGRP" units="degC"
+                         description="monthly interior temerature climatology interpolated to current timestep"
+                />
+                <var name="interiorSalinityMonthlyClimatologyValue" type="real" dimensions="nVertLevels nCells Time" array_group="activeGRP" units="psu"
+                         description="monthly interior salinity climatology interpolated to current timestep"
+                />
+        </var_struct>

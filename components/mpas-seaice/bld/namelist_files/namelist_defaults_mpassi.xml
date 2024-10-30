@@ -19,8 +19,8 @@
 <config_dt ice_grid="oARRM60to10">900.0</config_dt>
 <config_dt ice_grid="oARRM60to6">900.0</config_dt>
 <config_dt ice_grid="ARRM10to60E2r1">900.0</config_dt>
-<config_dt ice_grid="ARRMwISC3to18E3r1">10.0</config_dt>
-<config_dt ice_grid="ARRMwISC2p4to18E3r1">10.0</config_dt>
+<config_dt ice_grid="ARRMwISC3to18E3r1">150.0</config_dt>
+<config_dt ice_grid="ARRMwISC2p4to18E3r1">120.0</config_dt>
 <config_dt ice_grid="EC30to60E2r2">1800.0</config_dt>
 <config_dt ice_grid="WC14to60E2r3">1800.0</config_dt>
 <config_dt ice_grid="WCAtl12to45E2r4">1800.0</config_dt>
@@ -76,8 +76,8 @@
 <config_initial_latitude_north ice_grid="SOwISC12to60E2r4">85.0</config_initial_latitude_north>
 <config_initial_latitude_north ice_grid="ECwISC30to60E2r1">75.0</config_initial_latitude_north>
 <config_initial_latitude_north ice_grid="ARRM10to60E2r1">75.0</config_initial_latitude_north>
-<config_initial_latitude_north ice_grid="ARRMwISC3to18E3r1">75.0</config_initial_latitude_north>
-<config_initial_latitude_north ice_grid="ARRMwISC2p4to18E3r1">75.0</config_initial_latitude_north>
+<config_initial_latitude_north ice_grid="ARRMwISC3to18E3r1">85.0</config_initial_latitude_north>
+<config_initial_latitude_north ice_grid="ARRMwISC2p4to18E3r1">85.0</config_initial_latitude_north>
 <config_initial_latitude_north ice_grid="oRRS30to10v3wLI">85.0</config_initial_latitude_north>
 <config_initial_latitude_north ice_grid="oRRS18to6v3">85.0</config_initial_latitude_north>
 <config_initial_latitude_south>-60.0</config_initial_latitude_south>
@@ -438,7 +438,8 @@
 <config_prescribed_ice_stream_fill>false</config_prescribed_ice_stream_fill>
 
 <!-- AM_highFrequencyOutput -->
-<config_AM_highFrequencyOutput_enable>false</config_AM_highFrequencyOutput_enable>
+<!--config_AM_highFrequencyOutput_enable>false</config_AM_highFrequencyOutput_enable-->
+<config_AM_highFrequencyOutput_enable>true</config_AM_highFrequencyOutput_enable>
 <config_AM_highFrequencyOutput_compute_interval>'output_interval'</config_AM_highFrequencyOutput_compute_interval>
 <config_AM_highFrequencyOutput_output_stream>'highFrequencyOutput'</config_AM_highFrequencyOutput_output_stream>
 <config_AM_highFrequencyOutput_compute_on_startup>true</config_AM_highFrequencyOutput_compute_on_startup>

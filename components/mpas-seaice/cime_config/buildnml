@@ -210,7 +210,7 @@ def buildnml(case, caseroot, compname):
     elif ice_grid == 'ARRMwISC3to18E3r1':
         decomp_date = '20240619'
         decomp_prefix = 'partitions/mpas-seaice.graph.info.'
-        grid_date = '20240806'
+        grid_date = '20240823'
         grid_prefix = 'mpassi.ARRMwISC3to18E3r1'
         if ice_ic_mode == 'spunup':
             grid_date = '240701'
@@ -219,7 +219,7 @@ def buildnml(case, caseroot, compname):
     elif ice_grid == 'ARRMwISC2p4to18E3r1':
         decomp_date = '20240808'
         decomp_prefix = 'partitions/mpas-seaice.graph.info.'
-        grid_date = '20240805'
+        grid_date = '20240823'
         grid_prefix = 'mpassi.ARRMwISC2p4to18E3r1'
         if ice_ic_mode == 'spunup':
             grid_date = '240701'
@@ -389,7 +389,7 @@ def buildnml(case, caseroot, compname):
         lines.append('<streams>')
         lines.append('<immutable_stream name="mesh"')
         lines.append('                  type="none"')
-        if ice_grid.startswith("oRRS1"):
+        if ice_grid.startswith("oRRS1") or ice_grid.startswith("xxARRMwISC"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -398,7 +398,7 @@ def buildnml(case, caseroot, compname):
         lines.append('')
         lines.append('<immutable_stream name="input"')
         lines.append('                  type="input"')
-        if ice_grid.startswith("oRRS1"):
+        if ice_grid.startswith("oRRS1") or ice_grid.startswith("xxARRMwISC"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -420,7 +420,7 @@ def buildnml(case, caseroot, compname):
         lines.append('')
         lines.append('<immutable_stream name="restart"')
         lines.append('                  type="input;output"')
-        if ice_grid.startswith("oRRS1"):
+        if ice_grid.startswith("oRRS1") or ice_grid.startswith("xxARRMwISC"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -436,7 +436,7 @@ def buildnml(case, caseroot, compname):
         if ice_ic_mode == 'spunup':
             lines.append('<immutable_stream name="restart_ic"')
             lines.append('                  type="input"')
-            if ice_grid.startswith("oRRS1"):
+            if ice_grid.startswith("oRRS1") or ice_grid.startswith("xxARRMwISC"):
                 lines.append('                  io_type="pnetcdf,cdf5"')
             else:
                 lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -571,13 +571,14 @@ def buildnml(case, caseroot, compname):
         lines.append('        filename_template="{}.mpassi.hist.am.highFrequencyOutput.$Y-$M-$D.nc"'.format(casename))
         lines.append('        filename_interval="00-01-00_00:00:00"')
         lines.append('        reference_time="01-01-01_00:00:00"')
-        lines.append('        output_interval="none"')
+        lines.append('        output_interval="00-00-01_00:00:00"')
         lines.append('        clobber_mode="truncate"')
         lines.append('        packages="highFrequencyOutputAMPKG">')
         lines.append('')
         lines.append('    <var name="xtime"/>')
-        lines.append('    <stream name="mesh"/>')
-        lines.append('    <var name="iceAreaCellCategory1"/>')
+        lines.append('    <var name="daysSinceStartOfSim"/>')
+        lines.append('    <var name="iceAreaCell"/>')
+        lines.append('    <var name="iceVolumeCell"/>')
         lines.append('</stream>')
         lines.append('')
         lines.append('<stream name="regionalStatisticsOutput"')

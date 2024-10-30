@@ -2662,14 +2662,14 @@
     </domain>
 
     <domain name="ARRMwISC3to18E3r1">
-      <nx>594836</nx>
+      <nx>8023377</nx>
       <ny>1</ny>
       <file grid="ice|ocn">$DIN_LOC_ROOT/share/domains/domain.ocn.ARRMwISC3to18E3r1.240710.nc</file>
       <desc>ARRMwISC3to18E3r1 is an Arctic-Region-Refined MPAS ocean grid with 3km gridcells in the Arctic, Gulf Stream extension, and Kuroshio regions, imposed on a background RRS6to18 mesh.</desc>
     </domain>
 
     <domain name="ARRMwISC2p4to18E3r1">
-      <nx>594836</nx>
+      <nx>10167180</nx>
       <ny>1</ny>
       <file grid="ice|ocn">$DIN_LOC_ROOT/share/domains/domain.ocn.ARRMwISC2p4to18E3r1.240710.nc</file>
       <desc>ARRMwISC2p4to18E3r1 is an Arctic-Region-Refined MPAS ocean grid with 3km gridcells in the Arctic, Gulf Stream extension, and Kuroshio regions, imposed on a background RRS6to18 mesh.</desc>

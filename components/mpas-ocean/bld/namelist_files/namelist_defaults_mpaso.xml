@@ -42,8 +42,8 @@
 <config_dt ocn_grid="oARRM60to10">'00:10:00'</config_dt>
 <config_dt ocn_grid="oARRM60to6">'00:05:00'</config_dt>
 <config_dt ocn_grid="ARRM10to60E2r1">'00:10:00'</config_dt>
-<config_dt ocn_grid="ARRMwISC3to18E3r1">'00:00:10'</config_dt>
-<config_dt ocn_grid="ARRMwISC2p4to18E3r1">'00:00:10'</config_dt>
+<config_dt ocn_grid="ARRMwISC3to18E3r1">'00:02:30'</config_dt>
+<config_dt ocn_grid="ARRMwISC2p4to18E3r1">'00:02:00'</config_dt>
 <config_dt ocn_grid="EC30to60E2r2">'00:30:00'</config_dt>
 <config_dt ocn_grid="WC14to60E2r3">'00:10:00'</config_dt>
 <config_dt ocn_grid="WCAtl12to45E2r4">'00:10:00'</config_dt>
@@ -125,8 +125,8 @@
 <config_mom_del4 ocn_grid="WCAtl12to45E2r4">1.18e10</config_mom_del4>
 <config_mom_del4 ocn_grid="SOwISC12to60E2r4">1.18e10</config_mom_del4>
 <config_mom_del4 ocn_grid="ECwISC30to60E2r1">1.2e11</config_mom_del4>
-<config_mom_del4 ocn_grid="ARRMwISC3to18E3r1">1.6e09</config_mom_del4>
-<config_mom_del4 ocn_grid="ARRMwISC2p4to18E3r1">1.3e09</config_mom_del4>
+<config_mom_del4 ocn_grid="ARRMwISC3to18E3r1">4.0e08</config_mom_del4>
+<config_mom_del4 ocn_grid="ARRMwISC2p4to18E3r1">2.0e08</config_mom_del4>
 <config_mom_del4_div_factor>1.0</config_mom_del4_div_factor>
 <config_use_tracer_del4>.false.</config_use_tracer_del4>
 <config_tracer_del4>0.0</config_tracer_del4>
@@ -353,6 +353,8 @@
 <config_land_ice_flux_mode ocn_grid="oRRS30to10v3wLI">'standalone'</config_land_ice_flux_mode>
 <config_land_ice_flux_mode ocn_grid="SOwISC12to60E2r4">'standalone'</config_land_ice_flux_mode>
 <config_land_ice_flux_mode ocn_grid="ECwISC30to60E2r1">'standalone'</config_land_ice_flux_mode>
+<config_land_ice_flux_mode ocn_grid="ARRMwISC3to18E3r1">'pressure_only'</config_land_ice_flux_mode>
+<config_land_ice_flux_mode ocn_grid="ARRMwISC2p4to18E3r1">'pressure_only'</config_land_ice_flux_mode>
 <config_land_ice_flux_formulation>'Jenkins'</config_land_ice_flux_formulation>
 <config_land_ice_flux_useHollandJenkinsAdvDiff>.false.</config_land_ice_flux_useHollandJenkinsAdvDiff>
 <config_land_ice_flux_attenuation_coefficient>10.0</config_land_ice_flux_attenuation_coefficient>
@@ -365,6 +367,8 @@
 <config_land_ice_flux_topDragCoeff ocn_grid="ECwISC30to60E1r2">4.48e-3</config_land_ice_flux_topDragCoeff>
 <config_land_ice_flux_topDragCoeff ocn_grid="SOwISC12to60E2r4">4.48e-3</config_land_ice_flux_topDragCoeff>
 <config_land_ice_flux_topDragCoeff ocn_grid="ECwISC30to60E2r1">4.48e-3</config_land_ice_flux_topDragCoeff>
+<config_land_ice_flux_explicit_topDragCoeff ocn_grid="ARRMwISC3to18E3r1">4.48e-3</config_land_ice_flux_explicit_topDragCoeff>
+<config_land_ice_flux_explicit_topDragCoeff ocn_grid="ARRMwISC2p4to18E3r1">4.48e-3</config_land_ice_flux_explicit_topDragCoeff>
 <config_land_ice_flux_ISOMIP_gammaT>1e-4</config_land_ice_flux_ISOMIP_gammaT>
 <config_land_ice_flux_rms_tidal_velocity>5e-2</config_land_ice_flux_rms_tidal_velocity>
 <config_land_ice_flux_jenkins_heat_transfer_coefficient>0.011</config_land_ice_flux_jenkins_heat_transfer_coefficient>
@@ -372,11 +376,15 @@
 <config_land_ice_flux_jenkins_heat_transfer_coefficient ocn_grid="ECwISC30to60E1r2">0.00295</config_land_ice_flux_jenkins_heat_transfer_coefficient>
 <config_land_ice_flux_jenkins_heat_transfer_coefficient ocn_grid="SOwISC12to60E2r4">0.00295</config_land_ice_flux_jenkins_heat_transfer_coefficient>
 <config_land_ice_flux_jenkins_heat_transfer_coefficient ocn_grid="ECwISC30to60E2r1">0.00295</config_land_ice_flux_jenkins_heat_transfer_coefficient>
+<config_land_ice_flux_jenkins_heat_transfer_coefficient ocn_grid="ARRMwISC3to18E3r1">0.00295</config_land_ice_flux_jenkins_heat_transfer_coefficient>
+<config_land_ice_flux_jenkins_heat_transfer_coefficient ocn_grid="ARRMwISC2p4to18E3r1">0.00295</config_land_ice_flux_jenkins_heat_transfer_coefficient>
 <config_land_ice_flux_jenkins_salt_transfer_coefficient>3.1e-4</config_land_ice_flux_jenkins_salt_transfer_coefficient>
 <config_land_ice_flux_jenkins_salt_transfer_coefficient ocn_grid="oEC60to30v3wLI">8.42e-5</config_land_ice_flux_jenkins_salt_transfer_coefficient>
 <config_land_ice_flux_jenkins_salt_transfer_coefficient ocn_grid="ECwISC30to60E1r2">8.42e-5</config_land_ice_flux_jenkins_salt_transfer_coefficient>
 <config_land_ice_flux_jenkins_salt_transfer_coefficient ocn_grid="SOwISC12to60E2r4">8.42e-5</config_land_ice_flux_jenkins_salt_transfer_coefficient>
 <config_land_ice_flux_jenkins_salt_transfer_coefficient ocn_grid="ECwISC30to60E2r1">8.42e-5</config_land_ice_flux_jenkins_salt_transfer_coefficient>
+<config_land_ice_flux_jenkins_salt_transfer_coefficient ocn_grid="ARRMwISC3to18E3r1">8.42e-5</config_land_ice_flux_jenkins_salt_transfer_coefficient>
+<config_land_ice_flux_jenkins_salt_transfer_coefficient ocn_grid="ARRMwISC2p4to18E3r1">8.42e-5</config_land_ice_flux_jenkins_salt_transfer_coefficient>
 
 <!-- advection -->
 <config_vert_advection_method>'flux-form'</config_vert_advection_method>
@@ -398,6 +406,8 @@
 <config_explicit_bottom_drag_coeff>1.0e-3</config_explicit_bottom_drag_coeff>
 <config_use_topographic_wave_drag>.false.</config_use_topographic_wave_drag>
 <config_topographic_wave_drag_coeff>5.0e-4</config_topographic_wave_drag_coeff>
+<config_implicit_top_drag_coeff ocn_grid="ARRMwISC3to18E3r1">4.48e-3</config_implicit_top_drag_coeff>
+<config_implicit_top_drag_coeff ocn_grid="ARRMwISC2p4to18E3r1">4.48e-3</config_implicit_top_drag_coeff>
 
 <!-- ocean_constants -->
 <config_density0>1026.0</config_density0>
@@ -452,8 +462,8 @@
 <config_btr_dt ocn_grid="oARRM60to10">'0000_00:00:24'</config_btr_dt>
 <config_btr_dt ocn_grid="oARRM60to6">'0000_00:00:10'</config_btr_dt>
 <config_btr_dt ocn_grid="ARRM10to60E2r1">'0000_00:00:24'</config_btr_dt>
-<config_btr_dt ocn_grid="ARRMwISC3to18E3r1">'0000_00:00:01'</config_btr_dt>
-<config_btr_dt ocn_grid="ARRMwISC2p4to18E3r1">'0000_00:00:01'</config_btr_dt>
+<config_btr_dt ocn_grid="ARRMwISC3to18E3r1">'0000_00:00:07.5'</config_btr_dt>
+<config_btr_dt ocn_grid="ARRMwISC2p4to18E3r1">'0000_00:00:06'</config_btr_dt>
 <config_btr_dt ocn_grid="EC30to60E2r2">'0000_00:01:00'</config_btr_dt>
 <config_btr_dt ocn_grid="WC14to60E2r3">'0000_00:00:15'</config_btr_dt>
 <config_btr_dt ocn_grid="WCAtl12to45E2r4">'0000_00:00:15'</config_btr_dt>
@@ -868,7 +878,8 @@
 <config_AM_timeSeriesStatsDaily_backward_output_offset>'00-00-01_00:00:00'</config_AM_timeSeriesStatsDaily_backward_output_offset>
 
 <!-- AM_timeSeriesStatsMonthly -->
-<config_AM_timeSeriesStatsMonthly_enable>.true.</config_AM_timeSeriesStatsMonthly_enable>
+<!---config_AM_timeSeriesStatsMonthly_enable>.true.</config_AM_timeSeriesStatsMonthly_enable-->
+<config_AM_timeSeriesStatsMonthly_enable>.false.</config_AM_timeSeriesStatsMonthly_enable>
 <config_AM_timeSeriesStatsMonthly_compute_on_startup>.false.</config_AM_timeSeriesStatsMonthly_compute_on_startup>
 <config_AM_timeSeriesStatsMonthly_write_on_startup>.false.</config_AM_timeSeriesStatsMonthly_write_on_startup>
 <config_AM_timeSeriesStatsMonthly_compute_interval>'dt'</config_AM_timeSeriesStatsMonthly_compute_interval>
@@ -896,7 +907,8 @@
 <config_AM_timeSeriesStatsClimatology_backward_output_offset>'00-03-00_00:00:00'</config_AM_timeSeriesStatsClimatology_backward_output_offset>
 
 <!-- AM_timeSeriesStatsMonthlyMax -->
-<config_AM_timeSeriesStatsMonthlyMax_enable>.true.</config_AM_timeSeriesStatsMonthlyMax_enable>
+<!--config_AM_timeSeriesStatsMonthlyMax_enable>.true.</config_AM_timeSeriesStatsMonthlyMax_enable-->
+<config_AM_timeSeriesStatsMonthlyMax_enable>.false.</config_AM_timeSeriesStatsMonthlyMax_enable>
 <config_AM_timeSeriesStatsMonthlyMax_compute_on_startup>.false.</config_AM_timeSeriesStatsMonthlyMax_compute_on_startup>
 <config_AM_timeSeriesStatsMonthlyMax_write_on_startup>.false.</config_AM_timeSeriesStatsMonthlyMax_write_on_startup>
 <config_AM_timeSeriesStatsMonthlyMax_compute_interval>'00-00-00_01:00:00'</config_AM_timeSeriesStatsMonthlyMax_compute_interval>
@@ -910,7 +922,8 @@
 <config_AM_timeSeriesStatsMonthlyMax_backward_output_offset>'00-01-00_00:00:00'</config_AM_timeSeriesStatsMonthlyMax_backward_output_offset>
 
 <!-- AM_timeSeriesStatsMonthlyMin -->
-<config_AM_timeSeriesStatsMonthlyMin_enable>.true.</config_AM_timeSeriesStatsMonthlyMin_enable>
+<!--config_AM_timeSeriesStatsMonthlyMin_enable>.true.</config_AM_timeSeriesStatsMonthlyMin_enable-->
+<config_AM_timeSeriesStatsMonthlyMin_enable>.false.</config_AM_timeSeriesStatsMonthlyMin_enable>
 <config_AM_timeSeriesStatsMonthlyMin_compute_on_startup>.false.</config_AM_timeSeriesStatsMonthlyMin_compute_on_startup>
 <config_AM_timeSeriesStatsMonthlyMin_write_on_startup>.false.</config_AM_timeSeriesStatsMonthlyMin_write_on_startup>
 <config_AM_timeSeriesStatsMonthlyMin_compute_interval>'00-00-00_01:00:00'</config_AM_timeSeriesStatsMonthlyMin_compute_interval>
@@ -1091,10 +1104,16 @@
 
 <!-- AM_conservationCheck -->
 <config_AM_conservationCheck_enable>.false.</config_AM_conservationCheck_enable>
+<config_AM_conservationCheck_enable ocn_grid="ARRMwISC3to18E3r1">.true.</config_AM_conservationCheck_enable>
+<config_AM_conservationCheck_enable ocn_grid="ARRMwISC2p4to18E3r1">.true.</config_AM_conservationCheck_enable>
 <config_AM_conservationCheck_compute_interval>'dt'</config_AM_conservationCheck_compute_interval>
 <config_AM_conservationCheck_output_stream>'conservationCheckOutput'</config_AM_conservationCheck_output_stream>
 <config_AM_conservationCheck_compute_on_startup>.false.</config_AM_conservationCheck_compute_on_startup>
+<config_AM_conservationCheck_compute_on_startup ocn_grid="ARRMwISC3to18E3r1">.true.</config_AM_conservationCheck_compute_on_startup>
+<config_AM_conservationCheck_compute_on_startup ocn_grid="ARRMwISC2p4to18E3r1">.true.</config_AM_conservationCheck_compute_on_startup>
 <config_AM_conservationCheck_write_on_startup>.false.</config_AM_conservationCheck_write_on_startup>
+<config_AM_conservationCheck_write_on_startup ocn_grid="ARRMwISC3to18E3r1">.true.</config_AM_conservationCheck_write_on_startup>
+<config_AM_conservationCheck_write_on_startup ocn_grid="ARRMwISC2p4to18E3r1">.true.</config_AM_conservationCheck_write_on_startup>
 <config_AM_conservationCheck_write_to_logfile>.true.</config_AM_conservationCheck_write_to_logfile>
 <config_AM_conservationCheck_restart_stream>'conservationCheckRestart'</config_AM_conservationCheck_restart_stream>
 

@@ -624,11 +624,11 @@
           <ntasks_atm>192</ntasks_atm>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_rof>192</ntasks_rof>
-          <ntasks_ice>5120</ntasks_ice>
-          <ntasks_ocn>6000</ntasks_ocn>
+          <ntasks_ice>3456</ntasks_ice>
+          <ntasks_ocn>6144</ntasks_ocn>
           <ntasks_glc>1</ntasks_glc>
           <ntasks_wav>1</ntasks_wav>
-          <ntasks_cpl>5120</ntasks_cpl>
+          <ntasks_cpl>3456</ntasks_cpl>
         </ntasks>
         <nthrds>
           <nthrds_atm>1</nthrds_atm>
@@ -645,7 +645,44 @@
           <rootpe_lnd>0</rootpe_lnd>
           <rootpe_rof>0</rootpe_rof>
           <rootpe_ice>0</rootpe_ice>
-          <rootpe_ocn>5120</rootpe_ocn>
+          <rootpe_ocn>3456</rootpe_ocn>
+          <rootpe_glc>0</rootpe_glc>
+          <rootpe_wav>0</rootpe_wav>
+          <rootpe_cpl>0</rootpe_cpl>
+        </rootpe>
+      </pes>
+    </mach>
+  </grid>
+  <grid name="a%T62.+oi%ARRMwISC3to18|a%TL319.+oi%ARRMwISC3to18">
+    <mach name="carpenter|blueback">
+      <pes compset=".*MPASCICE.+MPASO.+|.*MPASSI.+MPASO.+" pesize="M">
+        <comment>none</comment>
+        <ntasks>
+          <ntasks_atm>192</ntasks_atm>
+          <ntasks_lnd>1</ntasks_lnd>
+          <ntasks_rof>192</ntasks_rof>
+          <ntasks_ice>5376</ntasks_ice>
+          <ntasks_ocn>10752</ntasks_ocn>
+          <ntasks_glc>1</ntasks_glc>
+          <ntasks_wav>1</ntasks_wav>
+          <ntasks_cpl>5376</ntasks_cpl>
+        </ntasks>
+        <nthrds>
+          <nthrds_atm>1</nthrds_atm>
+          <nthrds_lnd>1</nthrds_lnd>
+          <nthrds_rof>1</nthrds_rof>
+          <nthrds_ice>1</nthrds_ice>
+          <nthrds_ocn>1</nthrds_ocn>
+          <nthrds_glc>1</nthrds_glc>
+          <nthrds_wav>1</nthrds_wav>
+          <nthrds_cpl>1</nthrds_cpl>
+        </nthrds>
+        <rootpe>
+          <rootpe_atm>0</rootpe_atm>
+          <rootpe_lnd>0</rootpe_lnd>
+          <rootpe_rof>0</rootpe_rof>
+          <rootpe_ice>0</rootpe_ice>
+          <rootpe_ocn>5376</rootpe_ocn>
           <rootpe_glc>0</rootpe_glc>
           <rootpe_wav>0</rootpe_wav>
           <rootpe_cpl>0</rootpe_cpl>
@@ -683,6 +720,154 @@
           <rootpe_rof>0</rootpe_rof>
           <rootpe_ice>0</rootpe_ice>
           <rootpe_ocn>2048</rootpe_ocn>
+          <rootpe_glc>0</rootpe_glc>
+          <rootpe_wav>0</rootpe_wav>
+          <rootpe_cpl>0</rootpe_cpl>
+        </rootpe>
+      </pes>
+    </mach>
+  </grid>
+  <grid name="a%T62.+oi%ARRMwISC2p4to18|a%TL319.+oi%ARRMwISC2p4to18">
+    <mach name="carpenter|blueback">
+      <pes compset=".*MPASCICE.+MPASO.+|.*MPASSI.+MPASO.+" pesize="any">
+        <comment>none</comment>
+        <ntasks>
+          <ntasks_atm>192</ntasks_atm>
+          <ntasks_lnd>1</ntasks_lnd>
+          <ntasks_rof>192</ntasks_rof>
+          <ntasks_ice>3072</ntasks_ice>
+          <ntasks_ocn>6912</ntasks_ocn>
+          <ntasks_glc>1</ntasks_glc>
+          <ntasks_wav>1</ntasks_wav>
+          <ntasks_cpl>3072</ntasks_cpl>
+        </ntasks>
+        <nthrds>
+          <nthrds_atm>1</nthrds_atm>
+          <nthrds_lnd>1</nthrds_lnd>
+          <nthrds_rof>1</nthrds_rof>
+          <nthrds_ice>1</nthrds_ice>
+          <nthrds_ocn>1</nthrds_ocn>
+          <nthrds_glc>1</nthrds_glc>
+          <nthrds_wav>1</nthrds_wav>
+          <nthrds_cpl>1</nthrds_cpl>
+        </nthrds>
+        <rootpe>
+          <rootpe_atm>0</rootpe_atm>
+          <rootpe_lnd>0</rootpe_lnd>
+          <rootpe_rof>0</rootpe_rof>
+          <rootpe_ice>0</rootpe_ice>
+          <rootpe_ocn>3072</rootpe_ocn>
+          <rootpe_glc>0</rootpe_glc>
+          <rootpe_wav>0</rootpe_wav>
+          <rootpe_cpl>0</rootpe_cpl>
+        </rootpe>
+      </pes>
+    </mach>
+  </grid>
+  <grid name="a%T62.+oi%ARRMwISC2p4to18|a%TL319.+oi%ARRMwISC2p4to18">
+    <mach name="carpenter|blueback">
+      <pes compset=".*MPASCICE.+MPASO.+|.*MPASSI.+MPASO.+" pesize="M">
+        <comment>none</comment>
+        <ntasks>
+          <ntasks_atm>192</ntasks_atm>
+          <ntasks_lnd>1</ntasks_lnd>
+          <ntasks_rof>192</ntasks_rof>
+          <ntasks_ice>5760</ntasks_ice>
+          <ntasks_ocn>11520</ntasks_ocn>
+          <ntasks_glc>1</ntasks_glc>
+          <ntasks_wav>1</ntasks_wav>
+          <ntasks_cpl>5760</ntasks_cpl>
+        </ntasks>
+        <nthrds>
+          <nthrds_atm>1</nthrds_atm>
+          <nthrds_lnd>1</nthrds_lnd>
+          <nthrds_rof>1</nthrds_rof>
+          <nthrds_ice>1</nthrds_ice>
+          <nthrds_ocn>1</nthrds_ocn>
+          <nthrds_glc>1</nthrds_glc>
+          <nthrds_wav>1</nthrds_wav>
+          <nthrds_cpl>1</nthrds_cpl>
+        </nthrds>
+        <rootpe>
+          <rootpe_atm>0</rootpe_atm>
+          <rootpe_lnd>0</rootpe_lnd>
+          <rootpe_rof>0</rootpe_rof>
+          <rootpe_ice>0</rootpe_ice>
+          <rootpe_ocn>5760</rootpe_ocn>
+          <rootpe_glc>0</rootpe_glc>
+          <rootpe_wav>0</rootpe_wav>
+          <rootpe_cpl>0</rootpe_cpl>
+        </rootpe>
+      </pes>
+    </mach>
+  </grid>
+  <grid name="a%T62.+oi%ARRMwISC2p4to18|a%TL319.+oi%ARRMwISC2p4to18">
+    <mach name="carpenter|blueback">
+      <pes compset=".*MPASCICE.+MPASO.+|.*MPASSI.+MPASO.+" pesize="L">
+        <comment>none</comment>
+        <ntasks>
+          <ntasks_atm>192</ntasks_atm>
+          <ntasks_lnd>1</ntasks_lnd>
+          <ntasks_rof>192</ntasks_rof>
+          <ntasks_ice>8064</ntasks_ice>
+          <ntasks_ocn>17280</ntasks_ocn>
+          <ntasks_glc>1</ntasks_glc>
+          <ntasks_wav>1</ntasks_wav>
+          <ntasks_cpl>8064</ntasks_cpl>
+        </ntasks>
+        <nthrds>
+          <nthrds_atm>1</nthrds_atm>
+          <nthrds_lnd>1</nthrds_lnd>
+          <nthrds_rof>1</nthrds_rof>
+          <nthrds_ice>1</nthrds_ice>
+          <nthrds_ocn>1</nthrds_ocn>
+          <nthrds_glc>1</nthrds_glc>
+          <nthrds_wav>1</nthrds_wav>
+          <nthrds_cpl>1</nthrds_cpl>
+        </nthrds>
+        <rootpe>
+          <rootpe_atm>0</rootpe_atm>
+          <rootpe_lnd>0</rootpe_lnd>
+          <rootpe_rof>0</rootpe_rof>
+          <rootpe_ice>0</rootpe_ice>
+          <rootpe_ocn>8064</rootpe_ocn>
+          <rootpe_glc>0</rootpe_glc>
+          <rootpe_wav>0</rootpe_wav>
+          <rootpe_cpl>0</rootpe_cpl>
+        </rootpe>
+      </pes>
+    </mach>
+  </grid>
+  <grid name="a%T62.+oi%ARRMwISC2p4to18|a%TL319.+oi%ARRMwISC2p4to18">
+    <mach name="carpenter|blueback">
+      <pes compset=".*MPASCICE.+MPASO.+|.*MPASSI.+MPASO.+" pesize="X">
+        <comment>none</comment>
+        <ntasks>
+          <ntasks_atm>192</ntasks_atm>
+          <ntasks_lnd>1</ntasks_lnd>
+          <ntasks_rof>192</ntasks_rof>
+          <ntasks_ice>9600</ntasks_ice>
+          <ntasks_ocn>21504</ntasks_ocn>
+          <ntasks_glc>1</ntasks_glc>
+          <ntasks_wav>1</ntasks_wav>
+          <ntasks_cpl>9600</ntasks_cpl>
+        </ntasks>
+        <nthrds>
+          <nthrds_atm>1</nthrds_atm>
+          <nthrds_lnd>1</nthrds_lnd>
+          <nthrds_rof>1</nthrds_rof>
+          <nthrds_ice>1</nthrds_ice>
+          <nthrds_ocn>1</nthrds_ocn>
+          <nthrds_glc>1</nthrds_glc>
+          <nthrds_wav>1</nthrds_wav>
+          <nthrds_cpl>1</nthrds_cpl>
+        </nthrds>
+        <rootpe>
+          <rootpe_atm>0</rootpe_atm>
+          <rootpe_lnd>0</rootpe_lnd>
+          <rootpe_rof>0</rootpe_rof>
+          <rootpe_ice>0</rootpe_ice>
+          <rootpe_ocn>9600</rootpe_ocn>
           <rootpe_glc>0</rootpe_glc>
           <rootpe_wav>0</rootpe_wav>
           <rootpe_cpl>0</rootpe_cpl>

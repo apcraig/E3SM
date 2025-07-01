@@ -155,7 +155,7 @@ def buildlib(bldroot, installpath, case):
 
     cmake_opts += "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON "
     cmake_opts += f"-DGPTL_PATH:STRING={installpath} "
-    cmake_opts += "-DPIO_ENABLE_TESTS:BOOL=OFF -DPIO_USE_MALLOC:BOOL=ON "
+    cmake_opts += "-DPIO_ENABLE_TESTS:BOOL=OFF -DPIO_USE_MALLOC:BOOL=ON -DPIO_ENABLE_TOOLS:BOOL=OFF "
     cmake_opts += f"-DUSER_CMAKE_MODULE_PATH:LIST={cimeroot}/CIME/non_py/src/CMake "
 
     # Scorpio cmake system is not 100% compatible with the e3sm macros, so we have

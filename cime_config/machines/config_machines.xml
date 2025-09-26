@@ -5478,7 +5478,7 @@ AMD EPYC 7713 64-Core (Milan) (256GB) and 4 nvidia A100'</DESC>
       <env name="HDF5_ROOT"/>
       <env name="MPICH_ENV_DISPLAY">1</env>
       <env name="MPICH_VERSION_DISPLAY">1</env>
-      <env name="FI_CXI_RX_MATCH_MODE">hybrid</env>
+      <env name="FI_CXI_RX_MATCH_MODE">software</env>
       <env name="NETCDF_DIR">/opt/cray/pe/netcdf/4.9.0.3/INTEL/19.0</env>
       <!--env name="MPICH_CPUMASK_DISPLAY">1</env-->
 
@@ -5589,7 +5589,7 @@ AMD EPYC 7713 64-Core (Milan) (256GB) and 4 nvidia A100'</DESC>
       <env name="HDF5_ROOT"/>
       <env name="MPICH_ENV_DISPLAY">1</env>
       <env name="MPICH_VERSION_DISPLAY">1</env>
-      <env name="FI_CXI_RX_MATCH_MODE">hybrid</env>
+      <env name="FI_CXI_RX_MATCH_MODE">software</env>
       <env name="NETCDF_DIR">$ENV{NETCDF_DIR}</env>
       <!--env name="MPICH_CPUMASK_DISPLAY">1</env-->
 

@@ -624,11 +624,11 @@
           <ntasks_atm>192</ntasks_atm>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_rof>192</ntasks_rof>
-          <ntasks_ice>3456</ntasks_ice>
+          <ntasks_ice>4608</ntasks_ice>
           <ntasks_ocn>6144</ntasks_ocn>
           <ntasks_glc>1</ntasks_glc>
           <ntasks_wav>1</ntasks_wav>
-          <ntasks_cpl>3456</ntasks_cpl>
+          <ntasks_cpl>4608</ntasks_cpl>
         </ntasks>
         <nthrds>
           <nthrds_atm>1</nthrds_atm>
@@ -645,7 +645,7 @@
           <rootpe_lnd>0</rootpe_lnd>
           <rootpe_rof>0</rootpe_rof>
           <rootpe_ice>0</rootpe_ice>
-          <rootpe_ocn>3456</rootpe_ocn>
+          <rootpe_ocn>4608</rootpe_ocn>
           <rootpe_glc>0</rootpe_glc>
           <rootpe_wav>0</rootpe_wav>
           <rootpe_cpl>0</rootpe_cpl>
@@ -661,11 +661,11 @@
           <ntasks_atm>192</ntasks_atm>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_rof>192</ntasks_rof>
-          <ntasks_ice>5376</ntasks_ice>
-          <ntasks_ocn>10752</ntasks_ocn>
+          <ntasks_ice>6912</ntasks_ice>
+          <ntasks_ocn>9600</ntasks_ocn>
           <ntasks_glc>1</ntasks_glc>
           <ntasks_wav>1</ntasks_wav>
-          <ntasks_cpl>5376</ntasks_cpl>
+          <ntasks_cpl>6912</ntasks_cpl>
         </ntasks>
         <nthrds>
           <nthrds_atm>1</nthrds_atm>
@@ -682,7 +682,7 @@
           <rootpe_lnd>0</rootpe_lnd>
           <rootpe_rof>0</rootpe_rof>
           <rootpe_ice>0</rootpe_ice>
-          <rootpe_ocn>5376</rootpe_ocn>
+          <rootpe_ocn>6912</rootpe_ocn>
           <rootpe_glc>0</rootpe_glc>
           <rootpe_wav>0</rootpe_wav>
           <rootpe_cpl>0</rootpe_cpl>

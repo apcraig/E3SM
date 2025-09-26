@@ -395,8 +395,8 @@
       <value compset="_DATM.*_SLND.*MPAS" grid="oi%oRRS15to5">96</value>
       <value compset="_DATM.*_SLND.*MPAS" grid="oi%oARRM60to10">96</value>
       <value compset="_DATM.*_SLND.*MPAS" grid="oi%oARRM60to6">96</value>
-      <value compset="_DATM.*_SLND.*MPAS" grid="oi%ARRMwISC3to18E3r1">288</value>
-      <value compset="_DATM.*_SLND.*MPAS" grid="oi%ARRMwISC2p4to18E3r1">360</value>
+      <value compset="_DATM.*_SLND.*MPAS" grid="oi%ARRMwISC3to18E3r1">576</value>
+      <value compset="_DATM.*_SLND.*MPAS" grid="oi%ARRMwISC2p4to18E3r1">720</value>
       <value compset="_EAM.*_ELM.*MPASO">48</value>
       <value compset="_EAM.*_ELM.*MPASO" grid="a%ne11np4">12</value>
       <value compset="_EAM.*_ELM.*MPASO" grid="a%ne120np4">96</value>
@@ -513,8 +513,8 @@
       <value compset="_MPASO" grid="oi%oRRS15to5">96</value>
       <value compset="_MPASO" grid="oi%oARRM60to10">48</value>
       <value compset="_MPASO" grid="oi%oARRM60to6">48</value>
-      <value compset="_MPASO" grid="oi%ARRMwISC3to18E3r1">288</value>
-      <value compset="_MPASO" grid="oi%ARRMwISC2p4to18E3r1">360</value>
+      <value compset="_MPASO" grid="oi%ARRMwISC3to18E3r1">576</value>
+      <value compset="_MPASO" grid="oi%ARRMwISC2p4to18E3r1">720</value>
       <value compset="EAM%.*MMF1.*_MPASO" grid="oi%oQU480">$ATM_NCPL</value>
 
     </values>

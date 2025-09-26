@@ -655,7 +655,7 @@
   </grid>
   <grid name="a%T62.+oi%ARRMwISC3to18|a%TL319.+oi%ARRMwISC3to18">
     <mach name="carpenter|blueback">
-      <pes compset=".*MPASCICE.+MPASO.+|.*MPASSI.+MPASO.+" pesize="M">
+      <pes compset=".*MPASCICE.+MPASO.+|.*MPASSI.+MPASO.+" pesize="M1">
         <comment>none</comment>
         <ntasks>
           <ntasks_atm>192</ntasks_atm>

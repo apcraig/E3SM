@@ -217,6 +217,24 @@ def buildnml(case, caseroot, compname):
             grid_date = '220802'
             grid_prefix = 'mpassi.ARRM10to60E2r1.rstFrom1monthG-chrys'
 
+    elif ice_grid == 'ARRMwISC3to18E3r1':
+        decomp_date = '20240619'
+        decomp_prefix = 'partitions/mpas-seaice.graph.info.'
+        grid_date = '241022'
+        grid_prefix = 'mpassi.ARRMwISC3to18E3r1.rstFromG-pm'
+        if ice_ic_mode == 'spunup':
+            grid_date = '240701'
+            grid_prefix = 'mpassi.ARRMwISC3to18E3r1.rstFrom1monthG-chrys'
+
+    elif ice_grid == 'ARRMwISC2p4to18E3r1':
+        decomp_date = '20240808'
+        decomp_prefix = 'partitions/mpas-seaice.graph.info.'
+        grid_date = '20250415'
+        grid_prefix = 'mpassi.ARRMwISC2p4to18E3r1.rstFromG-pm'
+        if ice_ic_mode == 'spunup':
+            grid_date = '240701'
+            grid_prefix = 'mpassi.ARRMwISC2p4to18E3r1.rstFrom1monthG-chrys'
+
     elif ice_grid == 'EC30to60E2r2':
         decomp_date = '230313'
         decomp_prefix = 'partitions/mpas-seaice.graph.info.'
@@ -494,13 +512,21 @@ def buildnml(case, caseroot, compname):
             lines.append('<streams>')
             lines.append('<immutable_stream name="mesh"')
             lines.append('                  type="none"')
-            lines.append('                  io_type="{}"'.format(io_type_str))
+            if ice_grid.startswith("oRRS1") or ice_grid.startswith("FRIS") \
+                    or ice_grid.startswith("RRSwISC6") or ice_grid.startswith("ARRMwISC"):
+                lines.append('                  io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('                  io_type="{}"'.format(io_type_str))
 
             lines.append('                  filename_template="mesh_variables.nc" />')
             lines.append('')
             lines.append('<immutable_stream name="input"')
             lines.append('                  type="input"')
-            lines.append('                  io_type="{}"'.format(io_type_str))
+            if ice_grid.startswith("oRRS1") or ice_grid.startswith("FRIS") \
+                    or ice_grid.startswith("RRSwISC6") or ice_grid.startswith("ARRMwISC"):
+                lines.append('                  io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('                  io_type="{}"'.format(io_type_str))
 
             lines.append('                  filename_interval="none"')
             lines.append('                  filename_template="{}"'.format(input_file))
@@ -519,7 +545,11 @@ def buildnml(case, caseroot, compname):
             lines.append('')
             lines.append('<immutable_stream name="restart"')
             lines.append('                  type="input;output"')
-            lines.append('                  io_type="{}"'.format(io_type_str))
+            if ice_grid.startswith("oRRS1") or ice_grid.startswith("FRIS") \
+                    or ice_grid.startswith("RRSwISC6") or ice_grid.startswith("ARRMwISC"):
+                lines.append('                  io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('                  io_type="{}"'.format(io_type_str))
 
             lines.append('                  filename_template="{}.mpassi{}.rst.$Y-$M-$D_$S.nc"'.format(casename, inst_string))
             lines.append('                  filename_interval="output_interval"')
@@ -529,10 +559,16 @@ def buildnml(case, caseroot, compname):
             lines.append('                  output_interval="00-00-00_00:00:01" />')
             lines.append('')
 
-            if ice_ic_mode == 'spunup':
+            if ice_ic_mode == 'spunup' or \
+               ice_grid.startswith("oRRS1") or ice_grid.startswith("FRIS") \
+                    or ice_grid.startswith("RRSwISC6") or ice_grid.startswith("ARRMwISC"):
                 lines.append('<immutable_stream name="restart_ic"')
                 lines.append('                  type="input"')
-                lines.append('                  io_type="{}"'.format(io_type_str))
+                if ice_grid.startswith("oRRS1") or ice_grid.startswith("FRIS") \
+                        or ice_grid.startswith("RRSwISC6") or ice_grid.startswith("ARRMwISC"):
+                    lines.append('                  io_type="{},cdf5"'.format(io_type_str))
+                else:
+                    lines.append('                  io_type="{}"'.format(io_type_str))
 
                 lines.append('                  filename_template="{}"'.format(input_file))
                 lines.append('                  filename_interval="none"')
@@ -682,11 +718,14 @@ def buildnml(case, caseroot, compname):
             lines.append('        filename_template="{}.mpassi{}.hist.am.highFrequencyOutput.$Y-$M-$D.nc"'.format(casename, inst_string))
             lines.append('        filename_interval="00-01-00_00:00:00"')
             lines.append('        reference_time="01-01-01_00:00:00"')
-            lines.append('        output_interval="none"')
+            lines.append('        output_interval="00-00-01_00:00:00"')
             lines.append('        clobber_mode="truncate"')
             lines.append('        packages="highFrequencyOutputAMPKG">')
             lines.append('')
             lines.append('    <var name="xtime"/>')
+            lines.append('    <var name="daysSinceStartOfSim"/>')
+            lines.append('    <var name="iceAreaCell"/>')
+            lines.append('    <var name="iceVolumeCell"/>')
             lines.append('    <stream name="mesh"/>')
             lines.append('    <var name="iceAreaCellCategory1"/>')
             if ("WW3" in compset or "DWAV%FSD" in compset or "DWAV%ZEROS" in compset):

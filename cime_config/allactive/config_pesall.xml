@@ -2324,7 +2324,7 @@
     </mach>
   </grid>
   <grid name="a%ne30.+oi%oARRM60to10|a%ne30.+oi%ARRM10to60">
-    <mach name="onyx|warhawk|narwhal">
+    <mach name="any">
       <pes compset=".*EAM.+ELM.+MPASSI.+MPASO.+MOSART.+SGLC" pesize="any">
         <comment>none</comment>
         <ntasks>
@@ -2361,18 +2361,18 @@
     </mach>
   </grid>
   <grid name="a%ne0np4_arcticx4.+oi%oARRM60to10|a%ne0np4_arcticx4.+oi%ARRM10to60">
-    <mach name="onyx|warhawk|narwhal">
+    <mach name="any">
       <pes compset=".*EAM.+ELM.+MPASSI.+MPASO.+MOSART.+SGLC" pesize="any">
         <comment>none</comment>
         <ntasks>
-          <ntasks_atm>2768</ntasks_atm>
-          <ntasks_lnd>160</ntasks_lnd>
-          <ntasks_rof>208</ntasks_rof>
-          <ntasks_ice>2400</ntasks_ice>
-          <ntasks_ocn>1200</ntasks_ocn>
+          <ntasks_atm>4416</ntasks_atm>
+          <ntasks_lnd>3264</ntasks_lnd>
+          <ntasks_rof>1152</ntasks_rof>
+          <ntasks_ice>1152</ntasks_ice>
+          <ntasks_ocn>1320</ntasks_ocn>
           <ntasks_glc>1</ntasks_glc>
           <ntasks_wav>1</ntasks_wav>
-          <ntasks_cpl>2768</ntasks_cpl>
+          <ntasks_cpl>4416</ntasks_cpl>
         </ntasks>
         <nthrds>
           <nthrds_atm>1</nthrds_atm>
@@ -2386,10 +2386,10 @@
         </nthrds>
         <rootpe>
           <rootpe_atm>0</rootpe_atm>
-          <rootpe_lnd>0</rootpe_lnd>
-          <rootpe_rof>160</rootpe_rof>
-          <rootpe_ice>368</rootpe_ice>
-          <rootpe_ocn>2768</rootpe_ocn>
+          <rootpe_lnd>1152</rootpe_lnd>
+          <rootpe_rof>0</rootpe_rof>
+          <rootpe_ice>0</rootpe_ice>
+          <rootpe_ocn>4416</rootpe_ocn>
           <rootpe_glc>0</rootpe_glc>
           <rootpe_wav>0</rootpe_wav>
           <rootpe_cpl>0</rootpe_cpl>

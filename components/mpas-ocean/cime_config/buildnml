@@ -236,6 +236,28 @@ def buildnml(case, caseroot, compname):
             ic_date = '220802'
             ic_prefix = 'mpaso.ARRM10to60E2r1.rstFrom1monthG-chrys'
 
+    elif ocn_grid == 'ARRMwISC3to18E3r1':
+        decomp_date = '20240619'
+        decomp_prefix = 'partitions/mpas-o.graph.info.'
+        restoring_file = 'sss.PHC3.0_monthlyClimatology.ARRMwISC3to18E3r1.240710.nc'
+        analysis_mask_file = 'ARRMwISC3to18E3r1_mocBasinsAndTransects240710.nc'
+        ic_date = '241022'
+        ic_prefix = 'mpaso.ARRMwISC3to18E3r1.rstFromG-pm'
+        if ocn_ic_mode == 'spunup':
+            ic_date = '20240710'
+            ic_prefix = 'mpaso.ARRMwISC3to18E3r1.rstFrom1monthG-pm'
+
+    elif ocn_grid == 'ARRMwISC2p4to18E3r1':
+        decomp_date = '20240805'
+        decomp_prefix = 'partitions/mpas-o.graph.info.'
+        restoring_file = 'sss.PHC3.0_monthlyClimatology.ARRMwISC2p4to18E3r1.240710.nc'
+        analysis_mask_file = 'ARRMwISC2p4to18E3r1_mocBasinsAndTransects240710.nc'
+        ic_date = '20250415'
+        ic_prefix = 'mpaso.ARRMwISC2p4to18E3r1.rstFromG-pm'
+        if ocn_ic_mode == 'spunup':
+            ic_date = '20240710'
+            ic_prefix = 'mpaso.ARRMwISC2p4to18E3r1.rstFrom1monthG-pm'
+
     elif ocn_grid == 'EC30to60E2r2':
         decomp_date = '230313'
         decomp_prefix = 'partitions/mpas-o.graph.info.'
@@ -573,13 +595,21 @@ def buildnml(case, caseroot, compname):
             lines.append('')
             lines.append('<immutable_stream name="mesh"')
             lines.append('                  type="none"')
-            lines.append('                  io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('                  io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('                  io_type="{}"'.format(io_type_str))
 
             lines.append('                  filename_template="{}/ocn/mpas-o/{}/{}.{}.nc"'.format(din_loc_root, ocn_mask, ic_prefix, ic_date))
             lines.append('/>')
             lines.append('<immutable_stream name="input"')
             lines.append('                  type="input"')
-            lines.append('                  io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('                  io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('                  io_type="{}"'.format(io_type_str))
 
             lines.append('                  input_interval="initial_only"')
             lines.append('                  filename_template="{}"'.format(input_file))
@@ -597,7 +627,11 @@ def buildnml(case, caseroot, compname):
             lines.append('-->')
             lines.append('<immutable_stream name="restart"')
             lines.append('                  type="input;output"')
-            lines.append('                  io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('                  io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('                  io_type="{}"'.format(io_type_str))
 
             lines.append('                  filename_template="{}.mpaso{}.rst.$Y-$M-$D_$S.nc"'.format(casename, inst_string))
             lines.append('                  filename_interval="output_interval"')
@@ -613,7 +647,11 @@ def buildnml(case, caseroot, compname):
             lines.append('')
             lines.append('<stream name="output"')
             lines.append('        type="output"')
-            lines.append('        io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('        io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('        io_type="{}"'.format(io_type_str))
 
             lines.append('        filename_template="{}.mpaso{}.hist.$Y-$M-$D_$S.nc"'.format(casename, inst_string))
             lines.append('        filename_interval="00-01-00_00:00:00"')
@@ -802,7 +840,7 @@ def buildnml(case, caseroot, compname):
             lines.append('        filename_template="{}.mpaso{}.hist.am.globalStats.$Y-$M-$D.nc"'.format(casename, inst_string))
             lines.append('        filename_interval="00-01-00_00:00:00"')
             lines.append('        reference_time="01-01-01_00:00:00"')
-            lines.append('        output_interval="00-00-01_00:00:00"')
+            lines.append('        output_interval="00-00-00_01:00:00"')
             lines.append('        clobber_mode="truncate"')
             lines.append('        packages="globalStatsAMPKG">')
             lines.append('')
@@ -921,7 +959,11 @@ def buildnml(case, caseroot, compname):
             lines.append('<stream name="eddyProductVariablesOutput"')
             lines.append('        type="output"')
             lines.append('        precision="single"')
-            lines.append('        io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('        io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('        io_type="{}"'.format(io_type_str))
 
             lines.append('        filename_template="{}.mpaso{}.hist.am.eddyProductVariables.$Y-$M-$D.nc"'.format(casename, inst_string))
             lines.append('        filename_interval="00-01-00_00:00:00"')
@@ -950,7 +992,7 @@ def buildnml(case, caseroot, compname):
             lines.append('        filename_template="{}.mpaso{}.hist.am.highFrequencyOutput.$Y-$M-$D_$h.$m.$s.nc"'.format(casename, inst_string))
             lines.append('        filename_interval="00-01-00_00:00:00"')
             lines.append('        reference_time="01-01-01_00:00:00"')
-            lines.append('        output_interval="00-00-05_00:00:00"')
+            lines.append('        output_interval="00-00-01_00:00:00"')
             lines.append('        clobber_mode="append"')
             lines.append('        packages="highFrequencyOutputAMPKG">')
             lines.append('')
@@ -1292,7 +1334,11 @@ def buildnml(case, caseroot, compname):
             lines.append('<stream name="timeSeriesStatsMonthlyOutput"')
             lines.append('        type="output"')
             lines.append('        precision="single"')
-            lines.append('        io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('        io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('        io_type="{}"'.format(io_type_str))
 
             lines.append('        useMissingValMask="true"')
             lines.append('        filename_template="{}.mpaso{}.hist.am.timeSeriesStatsMonthly.$Y-$M-$D.nc"'.format(casename, inst_string))
@@ -1343,7 +1389,8 @@ def buildnml(case, caseroot, compname):
                 lines.append('    <var name="stokesDriftSurfaceZonal"/>')
                 lines.append('    <var name="stokesDriftSurfaceMeridional"/>')
                 lines.append('    <var name="langmuirNumber"/>')
-            if not (ocn_grid.startswith("oRRS1") or ocn_grid.startswith("RRSwISC6")):
+            if not (ocn_grid.startswith("oRRS1") or ocn_grid.startswith("RRSwISC6") \
+                    or ocn_grid.startswith("ARRMwISC")):
                 lines.append('    <var name="normalGMBolusVelocity"/>')
                 lines.append('    <var name="vertGMBolusVelocityTop"/>')
                 lines.append('    <var name="cGMphaseSpeed"/>')
@@ -1527,7 +1574,11 @@ def buildnml(case, caseroot, compname):
             lines.append('<stream name="timeSeriesStatsMonthlyMaxOutput"')
             lines.append('        type="output"')
             lines.append('        precision="single"')
-            lines.append('        io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('        io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('        io_type="{}"'.format(io_type_str))
 
             lines.append('        useMissingValMask="true"')
             lines.append('        filename_template="{}.mpaso{}.hist.am.timeSeriesStatsMonthlyMax.$Y-$M-$D.nc"'.format(casename, inst_string))
@@ -1596,7 +1647,11 @@ def buildnml(case, caseroot, compname):
             lines.append('<stream name="timeSeriesStatsMonthlyMinOutput"')
             lines.append('        type="output"')
             lines.append('        precision="single"')
-            lines.append('        io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('        io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('        io_type="{}"'.format(io_type_str))
 
             lines.append('        useMissingValMask="true"')
             lines.append('        filename_template="{}.mpaso{}.hist.am.timeSeriesStatsMonthlyMin.$Y-$M-$D.nc"'.format(casename, inst_string))
@@ -1706,7 +1761,11 @@ def buildnml(case, caseroot, compname):
             lines.append('')
             lines.append('<stream name="timeSeriesStatsMonthlyRestart"')
             lines.append('        type="input;output"')
-            lines.append('        io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('        io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('        io_type="{}"'.format(io_type_str))
 
             lines.append('        filename_template="{}.mpaso{}.rst.am.timeSeriesStatsMonthly.$Y-$M-$D_$S.nc"'.format(casename, inst_string))
             lines.append('        filename_interval="output_interval"')
@@ -1719,7 +1778,11 @@ def buildnml(case, caseroot, compname):
             lines.append('')
             lines.append('<stream name="timeSeriesStatsMonthlyMaxRestart"')
             lines.append('        type="input;output"')
-            lines.append('        io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('        io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('        io_type="{}"'.format(io_type_str))
 
             lines.append('        filename_template="{}.mpaso{}.rst.am.timeSeriesStatsMonthlyMax.$Y-$M-$D_$S.nc"'.format(casename, inst_string))
             lines.append('        filename_interval="output_interval"')
@@ -1732,7 +1795,11 @@ def buildnml(case, caseroot, compname):
             lines.append('')
             lines.append('<stream name="timeSeriesStatsMonthlyMinRestart"')
             lines.append('        type="input;output"')
-            lines.append('        io_type="{}"'.format(io_type_str))
+            if ocn_grid.startswith("oRRS1") or ocn_grid.startswith("FRIS") \
+                    or ocn_grid.startswith("RRSwISC6") or ocn_grid.startswith("ARRMwISC"):
+                lines.append('        io_type="{},cdf5"'.format(io_type_str))
+            else:
+                lines.append('        io_type="{}"'.format(io_type_str))
 
             lines.append('        filename_template="{}.mpaso{}.rst.am.timeSeriesStatsMonthlyMin.$Y-$M-$D_$S.nc"'.format(casename, inst_string))
             lines.append('        filename_interval="output_interval"')

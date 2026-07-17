@@ -236,6 +236,7 @@ module mpas_io
          return
       end if
       if (ioformat /= MPAS_IO_NETCDF .and. &
+          ioformat /= MPAS_IO_NETCDF5 .and. &
           ioformat /= MPAS_IO_NETCDF4 .and. &
           ioformat /= MPAS_IO_PNETCDF .and. &
           ioformat /= MPAS_IO_PNETCDF5 .and. &
@@ -305,6 +306,9 @@ module mpas_io
          else if (ioformat == MPAS_IO_NETCDF) then
             pio_iotype = PIO_iotype_netcdf
             pio_mode = PIO_64BIT_OFFSET
+         else if (ioformat == MPAS_IO_NETCDF5) then
+            pio_iotype = PIO_iotype_netcdf
+            pio_mode = PIO_64BIT_DATA
          else if (ioformat == MPAS_IO_NETCDF4) then
             pio_iotype = PIO_iotype_netcdf4p
 #ifdef USE_PIO2

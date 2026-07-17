@@ -10,6 +10,7 @@
 
    ! I/O formats
    integer, parameter :: MPAS_IO_NETCDF   = 3, &
+                         MPAS_IO_NETCDF5  = 35, &
                          MPAS_IO_PNETCDF  = 4, &
                          MPAS_IO_NETCDF4  = 5, &
                          MPAS_IO_PNETCDF5 = 6, &

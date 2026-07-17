@@ -67,6 +67,7 @@
       <value mach="chicoma-cpu">netcdf</value>
       <value mach="chicoma-gpu">netcdf</value>
       <value mach="fugaku" compiler="gnu">netcdf</value>
+      <value mach="barfoot">netcdf</value>
     </values>
   </entry>
 
@@ -278,6 +279,9 @@
   <entry id="CPL_PIO_TYPENAME">
     <values>
       <value mach="onyx">netcdf</value>
+      <value mach="carpenter">netcdf</value>
+      <value mach="barfoot">netcdf</value>
+      <value mach="blueback">netcdf</value>
       <value mach="narwhal">netcdf</value>
       <value mach="warhawk">netcdf</value>
     </values>

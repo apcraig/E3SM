@@ -545,6 +545,8 @@ contains
        mesh_iotype = MPAS_IO_PNETCDF5
     else if (trim(iotype) == 'netcdf') then
        mesh_iotype = MPAS_IO_NETCDF
+    else if (trim(iotype) == 'netcdf,cdf5') then
+       mesh_iotype = MPAS_IO_NETCDF5
     else if (trim(iotype) == 'netcdf4') then
        mesh_iotype = MPAS_IO_NETCDF4
     else if (trim(iotype) == 'adios') then

@@ -141,10 +141,10 @@ CONTAINS
 
       IF ( PRESENT( rc ) ) rc = ESMF_SUCCESS
 #ifndef HIDE_MPI
-      CALL MPI_Finalize( ier )
-      IF ( ier .ne. mpi_success )THEN
-        IF ( PRESENT( rc ) ) rc = ESMF_FAILURE
-      END IF
+!tcx      CALL MPI_Finalize( ier )
+!      IF ( ier .ne. mpi_success )THEN
+!        IF ( PRESENT( rc ) ) rc = ESMF_FAILURE
+!      END IF
 #endif
    END SUBROUTINE ESMF_Finalize
 

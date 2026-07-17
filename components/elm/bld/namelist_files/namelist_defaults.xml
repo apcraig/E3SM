@@ -498,6 +498,8 @@ lnd/clm2/surfdata_map/surfdata_0.125x0.125_simyr1850_c250910_TOP.nc</fsurdat>
 lnd/clm2/surfdata_map/surfdata_0.125x0.125_simyr1950_c210924.nc</fsurdat>
 <fsurdat hgrid="r025"    sim_year="1850" use_crop=".false." >
 lnd/clm2/surfdata_map/surfdata_0.25x0.25_simyr1850_c240125_TOP.nc</fsurdat>
+<fsurdat hgrid="r025"   sim_year="1950" use_crop=".false." >
+lnd/clm2/surfdata_map/surfdata_0.25x0.25_simyr2010_c240206_TOP.nc</fsurdat>
 
 <fsurdat hgrid="ne0np4_conus_x4v1_lowcon" sim_year="1850" use_crop=".false." >
 lnd/clm2/surfdata_map/surfdata_conusx4v1_simyr1850_c160503.nc</fsurdat>
@@ -577,6 +579,9 @@ lnd/clm2/surfdata_map/surfdata_conusx4v1_simyr2000_c160503.nc</fsurdat>
 
 <flanduse_timeseries hgrid="r05" sim_year_range="1850-2015"
   use_crop=".false." use_cn=".false." >lnd/clm2/surfdata_map/landuse.timeseries_0.5x0.5_hist_simyr1850-2015_c191004.nc</flanduse_timeseries>
+
+<flanduse_timeseries hgrid="r025" sim_year_range="1850-2000"
+  use_crop=".false." >lnd/clm2/surfdata_map/landuse.timeseries_0.25x0.25_hist_simyr1850-2015_c240125.nc</flanduse_timeseries>
 
 <!-- Dynamic PFT surface datasets for future scenarios(relative to {csmdata}) -->
 
